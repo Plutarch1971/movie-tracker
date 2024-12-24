@@ -13,7 +13,7 @@ export const autheticateToken = (req: Request, res: Response, next: NextFunction
     }
 
     try{
-        const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string);
+        const payload = jwt.verify(token, process.env.API_TOKEN_SECRET as string);
         req.user = payload;
         next();
         return;
