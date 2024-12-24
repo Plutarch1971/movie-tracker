@@ -1,8 +1,11 @@
 #root {
+  width: 80vw;
+  height: 80vh;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */
   text-align: center;
+  align-items: center;
 }
 
 .logo {
@@ -39,4 +42,126 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.homepage-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.movie-box-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.movie-box {
+  width: 20%;
+  height: 150px;
+  background-color: blue;
+  margin: 5px;
+}
+.nav-container {
+  display: felx;
+  flex-direction: row;
+  font-size: 20 rem;
+}
+.search-results-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.search-container {
+  font-size: 1.5 rem;
+  text-align: left;
+  margin-bottom: 10px;
+}
+.search-container label {
+  font-size: 1.5rem; /* Adjust the font size as needed */
+  font-weight: bold;
+}
+.search-container input {
+  width: calc(100% - 40px); /* Adjust the width to account for margins/padding */
+  height: 50px;
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+.profile-container {
+  width: 80vw;
+  height: 50vh;
+  display:flex;
+  flex-direction: column;
+  background-color: #89A9B4;
+  color: white;
+  text-align:left;
+  padding: 30px;
+}
+.watch-review-box{
+  width: 200px;
+  height: 150px;
+  background-color: blue;
+  margin:10px;
+  margin-left: 10px;
+}
+.profile-header{
+  width: 80vw;
+  font-size: 1.5 rem;
+  text-align: left;
+  /*margin-bottom: 10px;*/
+  font-size: 1.5rem; /* Adjust the font size as needed */
+  font-weight: bold;
+  background-color: #89A9B4;
+  color: white;
+  padding-left: 30px;
+}
+.profile-items{
+  background-color: white;
+  width: 80vw;
+  flex: 2;
+}
+.movie-container {
+  width: 60vw;
+  height: 50vh;
+  display:flex;
+  flex-direction: row;
+  background-color: #89A9B4;
+  color: white;
+  text-align:left;
+  padding: 30px;
+}
+.movie-item {
+  width: 300px;
+  background-color: white;
+  color: black;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid black; /* Corrected border property */
+  /*flex: 1; /* Ensure items are flexible within the container */
+}
+.movie-item:first-child {
+  flex: 1; /* First movie item takes up 1 part */
+}
+
+.movie-item:nth-child(2) {
+  flex: 2; /* Second movie item takes up 2 parts */
+}
+.movie-header{
+  width: 60vw;
+  font-size: 1.5 rem;
+  text-align: left;
+}
+
+
+.movie-search-item {
+  width: 200px;
+  overflow: hidden;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  background-color: beige;
+  padding: 5px;
+  margin: 0px;
 }
