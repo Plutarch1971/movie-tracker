@@ -1,6 +1,8 @@
 function ProfilePage () {
     return (
         <>
+         <div className="">
+
          <div className="profile-header">
             <h1>Profile</h1>
             <h2>Hello User username </h2>
@@ -19,7 +21,7 @@ function ProfilePage () {
             </div>
             </div>
         </div>
-
+        </div>
         </>
     )
 

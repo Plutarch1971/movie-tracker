@@ -1,11 +1,14 @@
 function MovieInfoPage () {
     return (
         <>
+        <div className="page-background">
          <div className="movie-header">
             <h1>Movie Info Page</h1>   
          </div>
          <div className="movie-container">
-            <div className="movie-item">Move Poster</div>
+            <div className="movie-item">
+            <img src="https://placehold.co/400" />
+            </div>
             <div className="movie-item">
                 <p>Title:</p>
                 <p>Actors:</p>
@@ -14,6 +17,7 @@ function MovieInfoPage () {
                 <p>Rating:</p>
                 <p>Description:</p>
             </div>
+        </div>
         </div>
 
         </>
