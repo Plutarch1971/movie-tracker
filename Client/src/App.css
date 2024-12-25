@@ -1,11 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* Prevents horizontal scroll*/
+}
 #root {
-  width: 80vw;
-  height: 80vh;
-  max-width: 1280px;
-  margin: 0 auto;
-  /* padding: 2rem; */
+  width: 100%;
+  height: 100%;
+  margin: 0;
   text-align: center;
-  align-items: center;
+  padding: 0;
 }
 
 .logo {
@@ -43,22 +51,66 @@
 .read-the-docs {
   color: #888;
 }
-
+.page-background {
+  width: 100%; 
+  min-height: 100vh;
+  margin:0;
+  padding: 0;
+  background-color: rgb(184, 239, 184);
+  /* background-size: cover; 
+  background-position: center; */ 
+}
 .homepage-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+  padding: 20px; 
+  /* gap: 20px; */
+}
+.homepage-header{
+  font-size: 80px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.row-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px; 
 }
-
+.row-container p {
+  font-size: 40px;
+}
 .movie-box-container {
+  width: 100%;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: white;
+  padding: 20px;
+  margin: 0;
+  gap: 15px;
 }
-
+.movie-box-container img {
+  width: 230px;
+  height: 230px;
+}
 .movie-box {
-  width: 20%;
-  height: 150px;
-  background-color: blue;
-  margin: 5px;
+  width: 230px;
+  height: 230px;
+  background-color: rgb(228, 228, 238);
+  margin: 10px; 
+  margin-bottom: 10px;
+  border: 1 solid black;
 }
 .nav-container {
   display: felx;
@@ -66,27 +118,41 @@
   font-size: 20 rem;
 }
 .search-results-container{
+  width: 100%;  
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
+  /* padding-left: 20px; */
 }
 .search-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   font-size: 1.5 rem;
   text-align: left;
   margin-bottom: 10px;
+  margin-left: 40px;
+  padding-left: 40px;
+  margin-top: 40px;
+}
+.search-container h1 {
+  display:flex;
+  justify-content: center;
 }
 .search-container label {
   font-size: 1.5rem; /* Adjust the font size as needed */
   font-weight: bold;
 }
 .search-container input {
-  width: calc(100% - 40px); /* Adjust the width to account for margins/padding */
+  width: calc(100% - 120px); /* Adjust the width to account for margins/padding */
   height: 50px;
   box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
 .profile-container {
-  width: 80vw;
+  width: 100%;
   height: 50vh;
   display:flex;
   flex-direction: column;
@@ -103,7 +169,7 @@
   margin-left: 10px;
 }
 .profile-header{
-  width: 80vw;
+  width: 100%;
   font-size: 1.5 rem;
   text-align: left;
   /*margin-bottom: 10px;*/
@@ -115,11 +181,11 @@
 }
 .profile-items{
   background-color: white;
-  width: 80vw;
+  width: 100%;
   flex: 2;
 }
 .movie-container {
-  width: 60vw;
+  width: 100%;
   height: 50vh;
   display:flex;
   flex-direction: row;
@@ -145,7 +211,7 @@
   flex: 2; /* Second movie item takes up 2 parts */
 }
 .movie-header{
-  width: 60vw;
+  width: 100%;
   font-size: 1.5 rem;
   text-align: left;
 }
@@ -159,9 +225,58 @@
 .navbar {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: end;
+  align-items: center;
   width: 100%;
+  height: 50px;
   background-color: beige;
-  padding: 5px;
-  margin: 0px;
+  padding: 20px;
+  margin: 0;
+  font-size:25px;
+  gap:40px;
+}
+.login-signup{
+  margin: 10px;
+  width: 35vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 20px;
+  border: 2px solid white;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.5); /* Set background color to white with 50% transparency */
+  gap: 5px; 
+ 
+}
+.login-container{
+  background-image: url('/movie-tracker.png');
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the image */
+  width: 100%;
+  min-height:100vh;
+  align-items: center;
+  justify-content: center; /* Center align items vertically */
+  padding: 20px;
+  color: rgb(11, 11, 11); /* Ensure text is visible on the background */
+}
+.login-container h1{
+  margin-bottom: 20px;
+}
+
+
+.login-container input{
+  height: 40px; 
+}
+.login-container label, .login-container button {
+  font-weight: bold;
+}
+button {
+  background-color: beige;
+  color: black;
+}
+.login-signup button {
+  margin-top: 20px;
+  background-color: beige;
+  color: black;
 }

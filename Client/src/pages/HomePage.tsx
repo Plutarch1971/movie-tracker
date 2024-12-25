@@ -1,21 +1,32 @@
 function HomePage() {
     return (
-        <>
+        <> 
+        <div className="page-background">
             <div className="homepage-container">
-                <img src="https://placehold.co/400" />
-
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-
+                <h1 className="homepage-header">Movie Tracker</h1>
+                <div className="row-container">
+                    <img src="https://placehold.co/400" />
+                    <p>Favourite, review or log all of what you want to watch with ease! Join our growing community today!</p>
+                </div>
             </div>
 
             <div className="movie-box-container">
-                <div className="movie-box"></div>
-                <div className="movie-box"></div>
-                <div className="movie-box"></div>
-                <div className="movie-box"></div>
-                <div className="movie-box"></div>
+            <img src="https://placehold.co/10" />
+            <img src="https://placehold.co/10" />
+            <img src="https://placehold.co/10" />
+            <img src="https://placehold.co/10" />
+            <img src="https://placehold.co/10" />
+            <img src="https://placehold.co/10" />
+            <img src="https://placehold.co/10" />
+                {/* <div className="movie-box">Movie 1</div>
+                <div className="movie-box">Movie 2</div>
+                <div className="movie-box">Movie 3</div>
+                <div className="movie-box">Movie 4</div>
+                <div className="movie-box">Movie 5</div>
+                <div className="movie-box">Movie 6</div>
+                <div className="movie-box">Movie 7</div> */}
             </div>
-
+        </div>
         </>
     )
 }

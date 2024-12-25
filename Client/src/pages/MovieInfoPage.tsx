@@ -19,5 +19,8 @@ function MovieInfoPage () {
         </>
     );
 }
+//Add Save movie button
+//Add option to rate the movie by user under movie details//give user 5 stars to click then hit button
+//Add Reviews sectoin on the bottom
 
 export default MovieInfoPage;
