@@ -56,7 +56,9 @@ html, body {
   min-height: 100vh;
   margin:0;
   padding: 0;
-  background-color: rgb(184, 239, 184);
+  background-image: url('/movietracker-bg.png');
+  /* background-color: #89A9B4; */
+  /* background-color: rgb(184, 239, 184); */
   /* background-size: cover; 
   background-position: center; */ 
 }
@@ -235,22 +237,9 @@ html, body {
   font-size:25px;
   gap:40px;
 }
-.login-signup{
-  margin: 10px;
-  width: 35vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  font-size: 20px;
-  border: 2px solid white;
-  padding: 30px;
-  background-color: rgba(255, 255, 255, 0.5); /* Set background color to white with 50% transparency */
-  gap: 5px; 
- 
-}
+
 .login-container{
-  background-image: url('/movie-tracker.png');
+  background-image: url('/movie-tracker-green.png');
   background-size: cover; /* Cover the entire container */
   background-position: center; /* Center the image */
   width: 100%;
@@ -271,12 +260,65 @@ html, body {
 .login-container label, .login-container button {
   font-weight: bold;
 }
-button {
+/* button {
   background-color: beige;
   color: black;
-}
+  border: 1 black solid;
+} */
 .login-signup button {
   margin-top: 20px;
   background-color: beige;
   color: black;
+}
+.signup-parent {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: left;
+  font-size: 15px;
+  color: black;
+  background-image: url('/movietracker-bg.png');
+  width:100%;
+  height: 100%;
+  border: 2 solid black;
+  gap: 10px;
+}
+.signup-parent img {
+  padding-top:50px;
+  margin: 50px;
+  height: 70vh;
+  width: 30vw;
+}
+.signup-child{
+  margin: 10px;
+  width: 35vw;
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  text-align: left;
+  font-size: 15px;
+  border: 2px solid rgb(22, 17, 17);
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.5); /* Set background color to white with 50% transparency */
+  gap: 5px; 
+  margin-top: 100px;
+  padding-top: 50px;
+ }
+ .signup-child {
+  input{
+  height: 40px; 
+  }
+  label {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  button {
+  margin-top: 20px;
+  background-color: rgb(185 205 89);
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  border: 4 rgb(32, 119, 196) solid;
+  }
 }

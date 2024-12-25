@@ -3,7 +3,7 @@ function Login () {
         <>
         <div className="login-container">
       
-        <div className="login-signup">
+        <div className="signup-child">
         <h1>Login</h1>
             <label htmlFor="username">Username:</label>
             <input type="text" id="username"></input>
