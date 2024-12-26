@@ -6,8 +6,8 @@ import HomePage from "./pages/HomePage";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import ProfilePage from "./pages/ProfilePage";
 import MovieInfoPage from "./pages/MovieInfoPage";
-import SignUp from "./pages/Auth/SignUp";
-import Login from "./pages/Auth/Login";
+import SignUp from "./pages/Auth/SignupForm.tsx";
+import Login from "./pages/Auth/LoginForm.tsx";
 
 const router = createBrowserRouter([
     {
