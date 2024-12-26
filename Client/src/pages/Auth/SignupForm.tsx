@@ -1,4 +1,14 @@
-function SignUp () {
+import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import { Form, Button, Alert } from 'react-bootstrap';
+import { useMutation } from '@apollo/client';
+
+import { ADD_USER } from '..graphql/mutations';
+import AuthService from '../utils/auth';
+import type { User } from '../models/User';
+
+
+function SignupForm () {
     return (
         <>
         <div className="signup-parent">
@@ -19,4 +29,4 @@ function SignUp () {
     )
 
 }
-export default SignUp;
+export default SignupForm;

@@ -131,14 +131,19 @@ html, body {
 .search-container {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: left;
   font-size: 1.5 rem;
   text-align: left;
-  margin-bottom: 10px;
   margin-left: 40px;
   padding-left: 40px;
   margin-top: 40px;
+  gap: 20px;
+}
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 .search-container h1 {
   display:flex;
@@ -147,11 +152,24 @@ html, body {
 .search-container label {
   font-size: 1.5rem; /* Adjust the font size as needed */
   font-weight: bold;
+  /* justify-content: left; */
 }
 .search-container input {
-  width: calc(100% - 120px); /* Adjust the width to account for margins/padding */
+  width: 810px;; /* Adjust the width to account for margins/padding */
   height: 50px;
   box-sizing: border-box; /* Ensure padding and border are included in the width */
+  /* justify-content:left; */
+}
+.search-container button {
+  width: 810px;
+  margin-top: 20px;
+  background-color: rgb(185 205 89);
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  border: 4 rgb(32, 119, 196) solid;
+  height: 55px;
+  padding-top: 10px;;
 }
 .profile-container {
   width: 100%;
