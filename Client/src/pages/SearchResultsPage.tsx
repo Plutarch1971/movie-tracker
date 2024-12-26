@@ -18,10 +18,10 @@ function SearchResultsPage() {
 
     return (
         <>
-            <div><h1>Search Results Page</h1></div>
+           
             <div className="search-container">
+            <div><h1>Search Results Page</h1></div>
                 <label htmlFor="search-input">Search</label>
-                <br />
                 <input id="search-input" type="search" onChange={filterSearch}/>
             </div>
             <div className="search-results-container">
