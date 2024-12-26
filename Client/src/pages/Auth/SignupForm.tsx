@@ -9,7 +9,7 @@ import type { User } from '../../models/User';
 
 
 
-function SignupForm (): JSX.Element {
+function SignUpForm (): JSX.Element {
     const [ signupFormData, setSignupFormData ] = useState<User>({
         username: '',
         password: '',
@@ -90,4 +90,4 @@ function SignupForm (): JSX.Element {
     )
 
 }
-export default SignupForm;
+export default SignUpForm;
