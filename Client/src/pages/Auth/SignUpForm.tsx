@@ -64,8 +64,8 @@ function SignupForm (): JSX.Element {
                     </Alert>
                 )}
               <form className="signup-child" noValidate onSubmit={handleFormSubmit}>
-              <div><h1>Sign In</h1></div>
-                <label htmlFor="username">Enter username:</label>
+              <div><h1>Sign Up</h1></div>
+                <label htmlFor="username">Create username:</label>
                 <input 
                     type="text" 
                     id="username"
@@ -74,7 +74,7 @@ function SignupForm (): JSX.Element {
                     onChange={handleInputChange}
                     required
                 />
-                <label htmlFor="password">Enter password:</label>
+                <label htmlFor="password">Create password:</label>
                 <input 
                     type="text" 
                     id="password"

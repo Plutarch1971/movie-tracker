@@ -8,11 +8,8 @@ function AppNavbar () {
             <Nav.Link href="/search">Search</Nav.Link>
             <Nav.Link href="/movieinfo">Movie Info</Nav.Link>
             <Nav.Link href="/profile">Profile</Nav.Link>
-            <div>
-              <Nav.Link href="/signup">Sign In / </Nav.Link>
-              <Nav.Link href="/login">Login</Nav.Link>
-            </div>
-            
+            <Nav.Link href="/signup">Sign Up</Nav.Link>
+            <Nav.Link href="/login">Login</Nav.Link>    
         </Nav>
       </Navbar>
         
