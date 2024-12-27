@@ -56,14 +56,15 @@ function SignupForm (): JSX.Element {
             <div>
             <img src="/harry-potter.png"></img>
             </div>
-            <div className="signup-child">
-                <div><h1>Sign In</h1></div>
+         
+               
                 {showAlert && (
                     <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
                         Invalid input. Please check your username and password.
                     </Alert>
                 )}
-              <form noValidate onSubmit={handleFormSubmit}>
+              <form className="signup-child" noValidate onSubmit={handleFormSubmit}>
+              <div><h1>Sign In</h1></div>
                 <label htmlFor="username">Enter username:</label>
                 <input 
                     type="text" 
@@ -85,7 +86,7 @@ function SignupForm (): JSX.Element {
                 <button type="submit">Submit</button>
                 </form>
             </div>
-        </div>
+      
         </>
     )
 

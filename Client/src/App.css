@@ -184,7 +184,7 @@ html, body {
 .watch-review-box{
   width: 200px;
   height: 150px;
-  background-color: blue;
+  /* background-color: blue; */
   margin:10px;
   margin-left: 10px;
 }
@@ -314,7 +314,7 @@ html, body {
 }
 .signup-child{
   margin: 10px;
-  width: 35vw;
+  width: 30vw;
   height: 65vh;
   display: flex;
   flex-direction: column;
@@ -330,7 +330,7 @@ html, body {
  }
  .signup-child {
   input{
-  height: 40px; 
+  height: 45px; 
   }
   label {
     font-weight: bold;
@@ -343,6 +343,12 @@ html, body {
   font-size: 20px;
   font-weight: bold;
   border: 4 rgb(32, 119, 196) solid;
+  padding-top: 20px;
+  }
+  h1 {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
   }
 }
 .page-background {

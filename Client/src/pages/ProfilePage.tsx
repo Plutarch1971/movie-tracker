@@ -11,14 +11,14 @@ function ProfilePage () {
             <h2>Watch List - Movies the user wants to watch</h2>
             <div className="profile-items">
             <div className="watch-review-box">
-                This is Watch list box.
+                 <img src="https://placehold.co/200"/>  
             </div>
             </div>
             <h2>Reviews</h2>
             <div className="profile-items">
             <div className="watch-review-box">
-            This is reviw box.
-            </div>
+                <img src="https://placehold.co/200"/> 
+           </div>
             </div>
         </div>
         </div>

@@ -21,8 +21,7 @@ const link = ApolloLink.from([authLink, httpLink]);
 
 //create the Apollo Client
 const client = new ApolloClient({
-    uri: '/graphql',
-    link,
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
 });
 
