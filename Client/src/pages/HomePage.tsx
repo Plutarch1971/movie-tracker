@@ -11,9 +11,10 @@ function HomePage() {
     useEffect(() => {
         async function fetchTrendingMovie(){
             try {
-                const response = await axios.get('https://api.themoviedb.org/3/trending/movie/day', {
+                const response = await axios.get('http://localhost:3001/api/tmdb/trending/movie/day', {
                     params: {
                         api_key: import.meta.env.VITE_TMDB_API_KEY  //Replace with your TMDB key
+                        // console.log(import.meta.env.VITE_TMDB_API_KEY);
                     }
                 });
               setTrendingMovie(response.data.results[0]);
@@ -34,6 +35,7 @@ function HomePage() {
             <div className="homepage-container">
                 <h1 className="homepage-header">Movie Tracker</h1>
                 <div className="row-container">
+                <img src="https://placehold.co/400" />
                     {trendingMovie && (
                     <img src={`https://image.tmdb.org/t/p/w500${trendingMovie.poster_path}`} alt={trendingMovie.title}/>
                     )}
