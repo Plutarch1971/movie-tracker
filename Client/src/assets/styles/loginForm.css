@@ -1,0 +1,33 @@
+
+.login-container{
+    background-image: url('/login-page-bg.png');
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    width: 100%;
+    min-height:100vh;
+    align-items: center;
+    justify-content: center; /* Center align items vertically */
+    padding: 50px;
+    color: rgb(11, 11, 11); /* Ensure text is visible on the background */
+  }
+  .login-container h1{
+    margin-bottom: 20px;
+  }
+  
+  
+  .login-container input{
+    height: 40px; 
+  }
+  .login-container label, .login-container button {
+    font-weight: bold;
+  }
+  /* button {
+    background-color: beige;
+    color: black;
+    border: 1 black solid;
+  } */
+  .login-signup button {
+    margin-top: 20px;
+    background-color: beige;
+    color: black;
+  }

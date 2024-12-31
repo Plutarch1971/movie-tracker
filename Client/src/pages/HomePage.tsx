@@ -1,6 +1,7 @@
 import dummyMovies from "../data/dummyMovies.json";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import '/src/assets/styles/homepage.css';
 
 
 function HomePage() {

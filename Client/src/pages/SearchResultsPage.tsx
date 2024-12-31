@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import debounce from 'lodash/debounce';
-
+// import '../../assets/styles/custom.css';
+import '/src/assets/styles/searchResults.css';
 
 interface Movie {
   id: number;
