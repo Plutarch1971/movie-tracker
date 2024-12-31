@@ -8,15 +8,15 @@ import AuthService from '../../utils/auth';
 import type { User } from '../../models/User';
 
 
-
 function SignupForm (): JSX.Element {
     const [ signupFormData, setSignupFormData ] = useState<User>({
         username: '',
         password: '',
+        watchlist: [],
     });
     
     // set state for form validation
-    const [validated, setValidated] = useState(false);
+    // const [validated, setValidated] = useState(false);
     //set state for alert
     const [showAlert, setShowAlert] = useState(false);
 
@@ -29,25 +29,19 @@ function SignupForm (): JSX.Element {
     };
     // handle form submission
     const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.stopPropagation();
-        }
-        setValidated(true);
+        event.preventDefault(); 
         try {
             const { data } = await addUser ({
-               variables: { ...signupFormData},
+               variables: {
+                username: signupFormData.username,
+                password: signupFormData.password
+               },
             });
             AuthService.login(data.addUser.token)
         } catch (err) {
             console.error('Problem adding User', err);
             setShowAlert(true);
         }
-        setSignupFormData({
-            username: '',
-            password: '',
-        });
 
     };
     return (
@@ -58,33 +52,41 @@ function SignupForm (): JSX.Element {
             </div>
          
                
-                {showAlert && (
+                {/* {showAlert && (
                     <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
                         Invalid input. Please check your username and password.
                     </Alert>
-                )}
+                )} */}
               <form className="signup-child" noValidate onSubmit={handleFormSubmit}>
-              <div><h1>Sign In</h1></div>
-                <label htmlFor="username">Enter username:</label>
+              <div><h1>Sign Up</h1></div>
+                <label htmlFor="username">Create username:</label>
                 <input 
                     type="text" 
                     id="username"
                     name="username"
-                    value={signupFormData.username}
+                    value={signupFormData.username || ''}
                     onChange={handleInputChange}
                     required
                 />
-                <label htmlFor="password">Enter password:</label>
+                <label htmlFor="password">Create password:</label>
                 <input 
                     type="text" 
                     id="password"
                     name="password"
-                    value={signupFormData.password}
+                    value={signupFormData.password || ''}
                     onChange={handleInputChange}
                     required
                     />
                 <button type="submit">Submit</button>
+                <div className="redirection-login">
+                    <h2>Already signed up...?</h2>
+                    <button
+                    onClick={() => window.location.href = '/login'}
+                    >Login here
+                    </button>
+                </div>
                 </form>
+                
             </div>
       
         </>

@@ -14,6 +14,7 @@ html, body {
   margin: 0;
   text-align: center;
   padding: 0;
+  background-image: url('/movietracker-bg.png');
 }
 
 .logo {
@@ -56,7 +57,7 @@ html, body {
   min-height: 100vh;
   margin:0;
   padding: 0;
-  background-image: url('/movietracker-bg.png');
+  background-image: url('./login-page-bg.png');
   /* background-color: #89A9B4; */
   /* background-color: rgb(184, 239, 184); */
   /* background-size: cover; 
@@ -93,19 +94,26 @@ html, body {
 }
 .movie-box-container {
   width: 100%;
+  height: 300px;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   background: white;
   padding: 20px;
   margin: 0;
   gap: 15px;
+  overflow-x: auto;  /* Enable horizontal scrolling if needed */
 }
-.movie-box-container img {
+.movie-item-container {
   width: 230px;
-  height: 230px;
-}
+  height: 260px;
+ }
+
+ .movie-item-container img {
+  width: 200px;
+  height: 250px;
+} 
 .movie-box {
   width: 230px;
   height: 230px;
@@ -126,12 +134,13 @@ html, body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  
   /* padding-left: 20px; */
 }
 .search-container {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: left;
   font-size: 1.5 rem;
   text-align: left;
@@ -258,18 +267,18 @@ html, body {
   padding: 20px;
   margin: 0;
   font-size:25px;
-  gap:40px;
+  gap:50px;
 }
 
 .login-container{
-  background-image: url('/movie-tracker-green.png');
+  background-image: url('/login-page-bg.png');
   background-size: cover; /* Cover the entire container */
   background-position: center; /* Center the image */
   width: 100%;
   min-height:100vh;
   align-items: center;
   justify-content: center; /* Center align items vertically */
-  padding: 20px;
+  padding: 50px;
   color: rgb(11, 11, 11); /* Ensure text is visible on the background */
 }
 .login-container h1{
@@ -354,3 +363,8 @@ html, body {
 .page-background {
   background-image: url('/movietracker-bg.png');
 }
+.redirection-login{
+  padding: 10px;
+  margin-top: 10px;
+}
+
