@@ -12,7 +12,7 @@ dotenv.config();
 
 console.log('MONGODB_URI', process.env.MONGODB_URI);
 
-const MONGO_CONNECTIOIN = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/movietrackerDB';
+const MONGO_CONNECTION = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/movietrackerDB';
 
 const openDB = async (): Promise<typeof mongoose.connection> => {
 

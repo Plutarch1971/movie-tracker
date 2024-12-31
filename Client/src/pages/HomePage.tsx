@@ -6,7 +6,7 @@ import axios from 'axios';
 function HomePage() {
 
     const [ dummyMoviesData, setDummyMoviesData] =useState(dummyMovies);
-    const [trendingMovie, setTrendingMovie] = useState(null);
+    const [trendingMovie, setTrendingMovie] = useState<{ poster_path: string; title: string } | null>(null);
 
     useEffect(() => {
         async function fetchTrendingMovie(){

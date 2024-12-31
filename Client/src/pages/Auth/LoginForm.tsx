@@ -12,9 +12,10 @@ function LoginForm () : JSX.Element {
     const [ userFormData , setUserFormData ] = useState<User>({
         username: '',
         password: '',
+        watchlist: [],
     });
     // set state for form validation
-    const [validated] = useState(false);
+    // const [validated] = useState(false);
     //set state for alert
     const [showAlert, setShowAlert] = useState(false);
 
@@ -38,10 +39,7 @@ function LoginForm () : JSX.Element {
             console.error('Problem logging User', err);
             setShowAlert(true);
         }
-        setUserFormData({
-            username: '',
-            password: '',
-        });
+       
     };
     return (
         <>
