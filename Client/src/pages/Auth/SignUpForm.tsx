@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../graphql/mutations';
 import AuthService from '../../utils/auth';
 import type { User } from '../../models/User';
-
+import '/src/assets/styles/signupForm.css';
 
 function SignupForm (): JSX.Element {
     const [ signupFormData, setSignupFormData ] = useState<User>({

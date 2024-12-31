@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../graphql/mutations';
 import AuthService from '../../utils/auth';
 import { User } from '../../models/User';
+import '/src/assets/styles/loginForm.css';
 
 
 function LoginForm () : JSX.Element {
