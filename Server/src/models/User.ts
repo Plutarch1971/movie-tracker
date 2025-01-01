@@ -2,6 +2,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 export interface IUser extends Document {
+  id: string;
   username: string;
   password: string;
   watchlist_id: mongoose.Types.ObjectId[];

@@ -1,6 +1,7 @@
-import React from 'react';
-import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
+import AuthService from '../../utils/auth';
 function AppNavbar () {
+  const isLoggedIn = AuthService.loggedIn();
     return (
       <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
         <Nav className="me-auto navbar">
@@ -8,11 +9,8 @@ function AppNavbar () {
             <Nav.Link href="/search">Search</Nav.Link>
             <Nav.Link href="/movieinfo">Movie Info</Nav.Link>
             <Nav.Link href="/profile">Profile</Nav.Link>
-            <div>
-              <Nav.Link href="/signup">Sign In / </Nav.Link>
-              <Nav.Link href="/login">Login</Nav.Link>
-            </div>
-            
+           {/* {isLoggedIn && <Nav.Link href="/profile">Profile</Nav.Link>} */}
+            <Nav.Link href="/signup">Sign Up / Login</Nav.Link>
         </Nav>
       </Navbar>
         

@@ -38,4 +38,5 @@ router.get('/:movieId', autheticateToken, async (req: Request, res: Response) =>
     }
 });
 
+
 export default router;
