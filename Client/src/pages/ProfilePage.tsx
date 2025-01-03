@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import auth from "../utils/auth";
 import type { User } from "../models/User";
-import { Alert } from '@/components/ui/alert';
+
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState<User>({
@@ -109,13 +109,9 @@ const ProfilePage = () => {
     return <div className="text-center p-4">Loading...</div>;
   }
 
-  if (error) {
-    return (
-      <Alert variant="destructive">
-        <p>{error}</p>
-      </Alert>
-    );
-  }
+    if (error) {
+        return <div className="text-center text-danger p-4">{error}</div>;
+    }
 
   return (
     <div className="container py-4">

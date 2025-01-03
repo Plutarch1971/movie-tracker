@@ -6,6 +6,7 @@ export interface IUser extends Document {
   password: string;
   watchlists: mongoose.Types.ObjectId[];
   reviews: mongoose.Types.ObjectId[];
+  isCorrectPassword(password: string): Promise<boolean>;
 }
 
 const UserSchema = new Schema({
@@ -37,5 +38,9 @@ UserSchema.pre('save', async function(next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+UserSchema.methods.isCorrectPassword = async function (password: string): Promise<boolean> {
+  return bcrypt.compare(password, this.password);
+};
 
 export default mongoose.model<IUser>('User', UserSchema);
