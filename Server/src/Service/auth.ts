@@ -33,7 +33,7 @@ export const authenticateToken = async ({ req }: {req: Request}) => {
 
     // Find the user
     const user = await User.findById(decoded.data._id);
-    req.body = decoded.data;
+    // req.body = decoded.data;
     if (!user) {
       console.log('No user found for the token');
       return { user: null };
@@ -55,9 +55,9 @@ export const authenticateToken = async ({ req }: {req: Request}) => {
     return { user: null };
   }
 };
-export const signToken = (username: string, email: string, _id: unknown) => {
+export const signToken = (username: string, _id: unknown) => {
   // Create a payload with the user information
-  const payload = { username, email, _id };
+  const payload = { username, _id };
   const secretKey: any = process.env.JWT_SECRET_KEY || 'Test'; // Get the secret key from environment variables
 
   // Sign the token with the payload and secret key, and set it to expire in 2 hours

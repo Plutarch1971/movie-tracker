@@ -32,18 +32,18 @@ class MovieTrackService{
 
     constructor(){
         this.apiKey = process.env.TMBD_API_KEY || '';
-        if(this.apiKey === ''){
-            throw new Error('TMBD API key not found');
-        }
+     //   if(this.apiKey === ''){
+    //        throw new Error('TMBD API key not found');
+     //   }
     }
 
 
     async searchMovies(query: string): Promise<Movie[]> {
         try{
-            const response = await axios.get(`${this.baseUrl}/search/movie`, {
+           const response = await axios.get(`${this.baseUrl}/search/movie`, {
                 params: {
                     api_key: this.apiKey,
-                    query: query
+                   query: query
                 }
             });
 

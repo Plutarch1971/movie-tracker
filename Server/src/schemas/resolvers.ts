@@ -1,5 +1,5 @@
-import { AuthenticationError, UserInputError } from 'apollo-server-express';
-import { 
+import { signToken, AuthenticationError } from '../Service/auth'
+import {
   User, 
   Review, 
   Watchlist,
@@ -11,6 +11,18 @@ import mongoose, { ObjectId } from 'mongoose';
 
 interface Context {
   user: IUser & { _id: ObjectId }; // Ensure _id is always present
+}
+
+interface AddUserArgs {
+  input: {
+    username: string;
+    password: string;
+  };
+}
+
+interface LoginArgs {
+  username: string;
+  password: string;
 }
 
 interface ReviewInput {
@@ -53,6 +65,31 @@ export const resolvers = {
   },
 
   Mutation: {
+
+    addUser: async (_parent: any, { input }: AddUserArgs) => {
+      // Create a nnew user with the provieded input
+      const user = await User.create({...input});
+
+      // Sign a JWT token with the user's username and id
+      const token = signToken(user.username, user._id);
+
+      return { token, user };
+    },
+
+    login: async (_parent: any, { username, password }: LoginArgs) => {
+      const user = await User.findOne({ username });
+
+      if (!user) throw new AuthenticationError('Incorrect username');
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) throw new AuthenticationError('Incorrect password');
+
+      const token = signToken(user.username, user._id);
+
+      return { token, user };
+    },
+
     addReview: async (_: unknown, { reviewData }: { reviewData: ReviewInput }, context: Context) => {
       if (!context.user) throw new AuthenticationError('Not authenticated');
 
@@ -62,7 +99,7 @@ export const resolvers = {
       });
 
       const user = await User.findById(context.user._id);
-      if (!user) throw new UserInputError('User not found');
+      if (!user) throw new AuthenticationError('User not found');
       
       user.reviews.push(newReview.id);
       await user.save();
@@ -74,7 +111,7 @@ export const resolvers = {
       if (!context.user) throw new AuthenticationError('Not authenticated');
 
       const review = await Review.findById(reviewId);
-      if (!review) throw new UserInputError('Review not found');
+      if (!review) throw new AuthenticationError('Review not found');
       
       if (review.user_id.toString() !== context.user._id.toString()) {
         throw new AuthenticationError('Not authorized to delete this review');
@@ -98,7 +135,7 @@ export const resolvers = {
       });
 
       const user = await User.findById(context.user._id);
-      if (!user) throw new UserInputError('User not found');
+      if (!user) throw new AuthenticationError('User not found');
 
       user.watchlists.push(newWatchlist.id);
       await user.save();
@@ -113,14 +150,14 @@ export const resolvers = {
       if (!context.user) throw new AuthenticationError('Not authenticated');
 
       const watchlist = await Watchlist.findById(watchlistId);
-      if (!watchlist) throw new UserInputError('Watchlist not found');
+      if (!watchlist) throw new AuthenticationError('Watchlist not found');
 
       if (watchlist.user_id.toString() !== context.user._id.toString()) {
         throw new AuthenticationError('Not authorized to modify this watchlist');
       }
 
       const movieExists = watchlist.movies.some(m => m.movie_id === movieData.movie_id);
-      if (movieExists) throw new UserInputError('Movie already in watchlist');
+      if (movieExists) throw new AuthenticationError('Movie already in watchlist');
 
       watchlist.movies.push({
         ...movieData,

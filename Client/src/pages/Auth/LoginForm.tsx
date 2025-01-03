@@ -14,6 +14,7 @@ function LoginForm () : JSX.Element {
         username: '',
         password: '',
         watchlist: [],
+        reviews: [],
     });
     // set state for form validation
     // const [validated] = useState(false);
