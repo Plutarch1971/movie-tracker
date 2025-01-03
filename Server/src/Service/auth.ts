@@ -33,7 +33,7 @@ export const authenticateToken = async ({ req }: {req: Request}) => {
 
     // Find the user
     const user = await User.findById(decoded.data._id);
-    req.user = decoded.data;
+    req.body = decoded.data;
     if (!user) {
       console.log('No user found for the token');
       return { user: null };

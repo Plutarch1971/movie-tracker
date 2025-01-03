@@ -1,7 +1,9 @@
 export interface Watchlist {
-    title: string;
-    genre: string;
-    update_date: Date;
-    movie_id: string;
-    review_id: string;
+    user_id: string | null;
+    title: string | null ;
+    movies: {
+        movie_id: string | null;
+        added_date: Date | null;
+        watched: boolean | null;
+    }[];
 }
