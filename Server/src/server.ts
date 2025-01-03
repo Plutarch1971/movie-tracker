@@ -6,8 +6,8 @@ import { fileURLToPath } from 'url';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
-import { authenticateToken } from './services/auth.js';
-import db from './config/connections.js';
+import { authenticateToken } from './Service/auth.js';
+import db from './config/connection.js';
 import Router from './Routes/api/movieTrackRoute.js';
 
 // Load environment variables
