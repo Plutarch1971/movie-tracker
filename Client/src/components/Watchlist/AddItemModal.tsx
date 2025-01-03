@@ -7,13 +7,17 @@ import '../../index.css'; // This CSS file contains the styling for the entire p
 
 
 const ADD_TO_WATCHLIST = gql`
-    mutation AddtoWatchList($movieId: ID!){
-        addToWatchList(movieId: $movieId){
-            id
-            title
-            posterURL
-        }
+  mutation AddMovieToWatchlist($watchlistId: ID!, $movieData: WatchlistMovieInput!) {
+    addMovieToWatchlist(watchlistId: $watchlistId, movieData: $movieData) {
+      _id
+      title
+      movies {
+        movie_id
+        watched
+        added_date
+      }
     }
+  }
 `;
 
 interface AddItemModalProps {

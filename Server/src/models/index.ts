@@ -1,5 +1,13 @@
-import user from './User.js';
-import watchlist from './watchlist.js';
-import review from './Review.js';
+import User, { IUser } from './User';
+import Review, { IReview } from './Review';
+import Watchlist, { IWatchlist } from './watchlist';
 
-export { user, watchlist, review };
+export {
+  User,
+  Review,
+  Watchlist,
+  // Export interfaces
+  IUser,
+  IReview,
+  IWatchlist
+};

@@ -60,7 +60,7 @@ export const WatchlistItem: React.FC<WatchlistItemProps> = ({ movie }) => {
         <CardContent className="p-0">
           <Link to={`/movie/${movie.id}`}>
             <img
-              src={movie.posterUrl}
+              src={movie.posterURL}
               alt={movie.title}
               className="w-full h-64 object-cover transition-transform duration-200 group-hover:scale-105"
             />
