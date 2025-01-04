@@ -22,6 +22,7 @@ const HomePage: React.FC = () => {
   const [recentlyReviewed, setRecentlyReviewed] = useState<MovieWithRatings[]>([]);
   const [mostReviewed, setMostReviewed] = useState<MovieWithRatings[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCommunityData = async (): Promise<void> => {
@@ -32,21 +33,24 @@ const HomePage: React.FC = () => {
           axios.get<MovieWithRatings[]>('/api/movies/most-reviewed')
         ]);
 
-        setTopRatedMovies(topRatedResponse.data.slice(0, 5));
-        setRecentlyReviewed(recentResponse.data.slice(0, 5));
-        setMostReviewed(popularResponse.data.slice(0, 5));
+        // Validate that the responses contain arrays
+        const topRated = Array.isArray(topRatedResponse.data) ? topRatedResponse.data : [];
+        const recent = Array.isArray(recentResponse.data) ? recentResponse.data : [];
+        const popular = Array.isArray(popularResponse.data) ? popularResponse.data : [];
+
+        setTopRatedMovies(topRated.slice(0, 5));
+        setRecentlyReviewed(recent.slice(0, 5));
+        setMostReviewed(popular.slice(0, 5));
         setLoading(false);
       } catch (error) {
         console.error('Error fetching community data:', error);
+        setError('Failed to load movie data. Please try again later.');
         setLoading(false);
       }
     };
 
-
-
     fetchCommunityData();
   }, []);
-
 
   const RatingStars: React.FC<RatingStarsProps> = ({ rating }) => (
     <div className="flex items-center gap-1">
@@ -63,12 +67,6 @@ const HomePage: React.FC = () => {
       <span className="ml-2 text-sm text-gray-600">{rating.toFixed(1)}</span>
     </div>
   );
-
-
-    // function filterSearch(event: any){
-    //     const filteredMoviesData = dummyMovies.filter(movie => movie.original_title);
-    //     setDummyMoviesData(filteredMoviesData);
-    //}
 
   const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
     <div className="w-64 h-96 overflow-hidden">
@@ -90,7 +88,6 @@ const HomePage: React.FC = () => {
   );
 
   if (loading) {
-
     return (
       <div className="flex items-center justify-center min-h-screen">
         <p className="text-xl">Loading...</p>
@@ -98,9 +95,29 @@ const HomePage: React.FC = () => {
     );
   }
 
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-xl text-red-600">{error}</p>
+      </div>
+    );
+  }
+
+  const MovieSection: React.FC<{ title: string; movies: MovieWithRatings[] }> = ({ title, movies }) => (
+    <section className="container mx-auto px-4 py-12">
+      <h2 className="text-2xl font-bold mb-6">{title}</h2>
+      <div className="flex gap-6 overflow-x-auto pb-4">
+        {movies.length > 0 ? (
+          movies.map(movie => <MovieCard key={movie.id} movie={movie} />)
+        ) : (
+          <p className="text-gray-500">No movies available</p>
+        )}
+      </div>
+    </section>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
       <div className="bg-gray-900 text-white py-16">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Movie Tracker</h1>
@@ -110,35 +127,9 @@ const HomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Top Rated Section */}
-      <section className="container mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold mb-6">Highest Rated</h2>
-        <div className="flex gap-6 overflow-x-auto pb-4">
-          {topRatedMovies.map(movie => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
-        </div>
-      </section>
-
-      {/* Most Reviewed Section */}
-      <section className="container mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold mb-6">Most Reviewed</h2>
-        <div className="flex gap-6 overflow-x-auto pb-4">
-          {mostReviewed.map(movie => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
-        </div>
-      </section>
-
-      {/* Recently Reviewed Section */}
-      <section className="container mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold mb-6">Recently Reviewed</h2>
-        <div className="flex gap-6 overflow-x-auto pb-4">
-          {recentlyReviewed.map(movie => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
-        </div>
-      </section>
+      <MovieSection title="Highest Rated" movies={topRatedMovies} />
+      <MovieSection title="Most Reviewed" movies={mostReviewed} />
+      <MovieSection title="Recently Reviewed" movies={recentlyReviewed} />
     </div>
   );
 };

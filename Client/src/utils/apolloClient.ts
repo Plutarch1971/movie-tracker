@@ -21,8 +21,8 @@ const link = ApolloLink.from([authLink, httpLink]);
 
 //create the Apollo Client
 const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    //link: link,
+    //link: authLink.concat(httpLink),
+    link: link,
     cache: new InMemoryCache(),
 });
 

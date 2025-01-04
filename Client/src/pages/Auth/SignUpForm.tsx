@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useMutation } from '@apollo/client';
-
+import {Form, Button} from 'react-bootstrap';
 import { ADD_USER } from '../../graphql/mutations';
 import AuthService from '../../utils/auth';
 import type { User } from '../../models/User';
@@ -16,9 +16,8 @@ function SignupForm (): JSX.Element {
     });
     
     // set state for form validation
-    // const [validated, setValidated] = useState(false);
-    //set state for alert
-    // const [showAlert, setShowAlert] = useState(false);
+     const [validated] = useState(false);
+
 
     const [ addUser ] = useMutation(ADD_USER);
 
@@ -57,7 +56,7 @@ function SignupForm (): JSX.Element {
                         Invalid input. Please check your username and password.
                     </Alert>
                 )} */}
-              <form className="signup-child" noValidate onSubmit={handleFormSubmit}>
+              <Form className="signup-child" noValidate validated={validated} onSubmit={handleFormSubmit}>
               <div><h1>Sign Up</h1></div>
                 <label htmlFor="username">Create username:</label>
                 <input 
@@ -85,7 +84,7 @@ function SignupForm (): JSX.Element {
                     >Login here
                     </button>
                 </div>
-                </form>
+                </Form>
                 
             </div>
       
