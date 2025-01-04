@@ -1,4 +1,4 @@
-import { gql } from '@apollo/server';
+import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   type User {
@@ -51,6 +51,10 @@ export const typeDefs = gql`
     movie_id: String!
     watched: Boolean
   }
+   type Auth { 
+   token: ID!
+   user: User!
+   }
 
   type Query {
     me: User
@@ -61,10 +65,11 @@ export const typeDefs = gql`
   }
 
   type Mutation {
+    login(username:String!, password: String!): Auth!
     addReview(reviewData: ReviewInput!): Review!
     removeReview(reviewId: ID!): Boolean!
     updateReviewRating(reviewId: ID!, rating: Int!): Review!
-    
+    addUser(username: String!, password: String!): Auth!
     createWatchlist(watchlistData: WatchlistInput!): Watchlist!
     deleteWatchlist(watchlistId: ID!): Boolean!
     addMovieToWatchlist(watchlistId: ID!, movieData: WatchlistMovieInput!): Watchlist!

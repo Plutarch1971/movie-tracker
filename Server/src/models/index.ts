@@ -1,6 +1,6 @@
-import User, { IUser } from './User';
-import Review, { IReview } from './Review';
-import Watchlist, { IWatchlist } from './watchlist';
+import User, { IUser } from './User.js';
+import Review, { IReview } from './Review.js';
+import Watchlist, { IWatchlist } from './watchlist.js';
 
 export {
   User,

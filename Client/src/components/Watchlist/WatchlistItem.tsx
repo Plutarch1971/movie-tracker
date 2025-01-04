@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation, gql } from '@apollo/client';
-import { Card, CardContent } from '@/components/ui/card'; // This is a CSS for the card
-import { Button } from '@/components/ui/button'; // This is a CSS for the button
+import Card from 'react-bootstrap/Card'; // This is a CSS for the card
+import Button  from 'react-bootstrap/Button'; // This is a CSS for the button
 import { Trash } from 'lucide-react';
 
 
@@ -57,7 +57,7 @@ export const WatchlistItem: React.FC<WatchlistItemProps> = ({ movie }) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <CardContent className="p-0">
+        <Card.Body className="p-0">
           <Link to={`/movie/${movie.id}`}>
             <img
               src={movie.posterURL}
@@ -75,14 +75,14 @@ export const WatchlistItem: React.FC<WatchlistItemProps> = ({ movie }) => {
           {isHovered && (
             <Button
               variant="destructive"
-              size="icon"
+              size="sm"
               className="absolute top-2 right-2"
               onClick={handleRemove}
             >
               <Trash className="h-4 w-4" />
             </Button>
           )}
-        </CardContent>
+        </Card.Body>
       </Card>
     );
   };

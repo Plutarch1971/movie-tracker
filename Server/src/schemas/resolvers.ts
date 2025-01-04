@@ -1,4 +1,4 @@
-import { signToken, AuthenticationError } from '../Service/auth'
+import { signToken, AuthenticationError } from '../Service/auth.js'
 import {
   User, 
   Review, 
@@ -6,7 +6,7 @@ import {
   IUser,
   IReview,
   IWatchlist 
-} from '..//models/index';
+} from '../models/index.js';
 import mongoose, { ObjectId } from 'mongoose';
 
 interface Context {

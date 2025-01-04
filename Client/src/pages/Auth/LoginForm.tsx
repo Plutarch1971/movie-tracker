@@ -22,6 +22,7 @@ function LoginForm () : JSX.Element {
     const [showAlert, setShowAlert] = useState(false);
 
     const [ login, { error } ] = useMutation(LOGIN_USER);
+    console.log("Error:", error);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;

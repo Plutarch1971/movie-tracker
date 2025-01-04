@@ -42,8 +42,11 @@ const HomePage: React.FC = () => {
       }
     };
 
+
+
     fetchCommunityData();
   }, []);
+
 
   const RatingStars: React.FC<RatingStarsProps> = ({ rating }) => (
     <div className="flex items-center gap-1">
@@ -60,6 +63,12 @@ const HomePage: React.FC = () => {
       <span className="ml-2 text-sm text-gray-600">{rating.toFixed(1)}</span>
     </div>
   );
+
+
+    // function filterSearch(event: any){
+    //     const filteredMoviesData = dummyMovies.filter(movie => movie.original_title);
+    //     setDummyMoviesData(filteredMoviesData);
+    //}
 
   const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
     <div className="w-64 h-96 overflow-hidden">
@@ -81,6 +90,7 @@ const HomePage: React.FC = () => {
   );
 
   if (loading) {
+
     return (
       <div className="flex items-center justify-center min-h-screen">
         <p className="text-xl">Loading...</p>
