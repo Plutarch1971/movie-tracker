@@ -2,11 +2,11 @@ import { ApolloClient, ApolloLink, InMemoryCache, createHttpLink } from '@apollo
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
-    uri: '/graphql',
+    uri: 'http://localhost:3001/graphql',
 });
 //Create middleware that will add the jwt token to the request headers
 const authLink = setContext((_, { headers}) => {
-    const token = localStorage.getItem('id_token');
+    const token = localStorage.getItem('token'); //replaced 'id_token'
     console.log('Token retrieved:', token); //Check if token is being retrieved
     return {
       headers: {
@@ -22,6 +22,7 @@ const link = ApolloLink.from([authLink, httpLink]);
 //create the Apollo Client
 const client = new ApolloClient({
     link: authLink.concat(httpLink),
+    //link: link,
     cache: new InMemoryCache(),
 });
 

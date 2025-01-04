@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';// This is a CSS for the dialog box
-import { Button } from '@/components/ui/button'; // This is a CSS for the button
-import { Alert } from '@/components/ui/alert'; // This is a CSS for the alert box
+import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+import Modal from 'react-bootstrap/Modal';
 import '../../index.css'; // This CSS file contains the styling for the entire page and the above components used for CSS will be used in this file.
 
 
@@ -53,15 +53,16 @@ export const AddItemModal: React.FC<AddItemModalProps> = ({ isOpen, onClose, mov
     };
 
     return (
-        <Dialog isOpen={isOpen} onClose={onClose}>
-         <DialogContent>
-            <DialogHeader>
-            <DialogTitle>Add to Watchlist</DialogTitle>
-            </DialogHeader>
+      <Modal show={isOpen} onHide={onClose}>
+        <Modal.Dialog >
+         <Modal.Body>
+            <Modal.Header>
+            <Modal.Title>Add to Watchlist</Modal.Title>
+            </Modal.Header>
             <div className= 'p-4'>
                 <p className= 'mb-4'>Add "{movie.title} to your watchlist?"</p>
                 {error && (
-                <Alert type="error" className="mb-4">
+                <Alert variant="danger"className="mb-4">
                     {error}
                 </Alert>
                 )}
@@ -74,7 +75,8 @@ export const AddItemModal: React.FC<AddItemModalProps> = ({ isOpen, onClose, mov
                     </Button>
                </div>
             </div>
-         </DialogContent>
-        </Dialog>
+         </Modal.Body>
+        </Modal.Dialog>
+        </Modal>
     );
 };

@@ -19,8 +19,8 @@
   
       /* Type Checking */
       "strict": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
+       "noUnusedLocals": true,
+       "noUnusedParameters": true,
       "noFallthroughCasesInSwitch": true,
       "exactOptionalPropertyTypes": true /* Interpret optional property types as written, rather than adding 'undefined'. */,
       "noImplicitReturns": true /* Enable error reporting for codepaths that do not explicitly return in a function. */,

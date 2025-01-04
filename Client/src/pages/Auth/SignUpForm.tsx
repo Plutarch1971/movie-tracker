@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
-import { Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 
 import { ADD_USER } from '../../graphql/mutations';
@@ -13,12 +12,13 @@ function SignupForm (): JSX.Element {
         username: '',
         password: '',
         watchlist: [],
+        reviews: [],
     });
     
     // set state for form validation
     // const [validated, setValidated] = useState(false);
     //set state for alert
-    const [showAlert, setShowAlert] = useState(false);
+    // const [showAlert, setShowAlert] = useState(false);
 
     const [ addUser ] = useMutation(ADD_USER);
 
@@ -40,7 +40,7 @@ function SignupForm (): JSX.Element {
             AuthService.login(data.addUser.token)
         } catch (err) {
             console.error('Problem adding User', err);
-            setShowAlert(true);
+            // setShowAlert(true);
         }
 
     };

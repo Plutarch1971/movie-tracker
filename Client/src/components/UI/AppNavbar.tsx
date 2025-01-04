@@ -9,7 +9,7 @@ function AppNavbar () {
             <Nav.Link href="/search">Search</Nav.Link>
             <Nav.Link href="/movieinfo">Movie Info</Nav.Link>
             <Nav.Link href="/profile">Profile</Nav.Link>
-           {/* {isLoggedIn && <Nav.Link href="/profile">Profile</Nav.Link>} */}
+           {isLoggedIn && <Nav.Link href="/profile">Profile</Nav.Link>}
             <Nav.Link href="/signup">Sign Up / Login</Nav.Link>
         </Nav>
       </Navbar>

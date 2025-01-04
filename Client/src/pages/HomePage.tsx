@@ -6,7 +6,7 @@ import '/src/assets/styles/homepage.css';
 
 function HomePage() {
 
-    const [ dummyMoviesData, setDummyMoviesData] =useState(dummyMovies);
+    const [ dummyMoviesData,] =useState(dummyMovies);
     const [trendingMovie, setTrendingMovie] = useState<{ poster_path: string; title: string } | null>(null);
 
     useEffect(() => {
@@ -26,10 +26,10 @@ function HomePage() {
         fetchTrendingMovie();
     }, []);
 
-    function filterSearch(event: any){
-        const filteredMoviesData = dummyMovies.filter(movie => movie.original_title);
-        setDummyMoviesData(filteredMoviesData);
-    }
+    // function filterSearch(event: any){
+    //     const filteredMoviesData = dummyMovies.filter(movie => movie.original_title);
+    //     setDummyMoviesData(filteredMoviesData);
+    //}
     return (
         <> 
         <div className="page-background">

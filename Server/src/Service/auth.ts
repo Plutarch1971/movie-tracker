@@ -1,6 +1,6 @@
 import type { Request} from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
+import { User } from '../models/index.js';
 import { GraphQLError } from 'graphql';
 import dotenv from 'dotenv';
 dotenv.config();
