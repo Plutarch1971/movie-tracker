@@ -1,0 +1,118 @@
+.movie-info-container {
+    min-height: 100vh;
+    background-color: rgb(249, 250, 251);
+    color: black;
+  }
+  
+  .movie-poster img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .movie-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .movie-details {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .movie-reviews {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .review {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .review:last-child {
+    border-bottom: none;
+  }
+  
+  /* Ensure text remains black throughout */
+  h1, h2, h3, p, span, div {
+    color: black;
+  }
+  
+  /* Add some hover effects for interactive elements */
+  button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .movie-info-container {
+      padding: 1rem;
+    }
+  }.movie-info-container {
+  min-height: 100vh;
+  background-color: rgb(249, 250, 251);
+  color: black;
+}
+
+.movie-poster img {
+  width: 400px;
+  height: 500px;
+  padding: 20px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.movie-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .movie-details {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.movie-reviews {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.review {
+  padding: 1rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.review:last-child {
+  border-bottom: none;
+}
+
+/* Ensure text remains black throughout */
+h1, h2, h3, p, span, div {
+  color: black;
+}
+
+/* Add some hover effects for interactive elements */
+button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .movie-info-container {
+    padding: 1rem;
+  }
+}

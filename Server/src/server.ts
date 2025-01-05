@@ -8,7 +8,8 @@ import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
 import { authenticateToken } from './Service/auth.js';
 import db from './config/connection.js';
-import Router from './Routes/api/movieTrackRoute.js';
+import APIRouter from './Routes/api/movieTrackRoute.js';
+import router from './Routes/ourAPI_Routes.js';
 
 // Load environment variables
 dotenv.config();
@@ -61,7 +62,8 @@ const startServer = async () => {
     }));
 
     // REST API Routes
-    app.use('/api/movies', Router);
+    app.use('/api/movies', APIRouter);
+    app.use('/our-api', router);
 
     // Health check endpoint
     app.get('/health', (_req, res) => {
