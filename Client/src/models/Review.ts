@@ -4,4 +4,5 @@ export interface Review {
     date: Date | null;
     rating: number | null;
     note: string | null;
+    username: string | null;
 }

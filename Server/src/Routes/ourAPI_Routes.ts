@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
-import  Review from '../models/Review';
-import { authenticateToken } from '../Service/auth';
+import  Review from '../models/Review.js';
+import { authenticateToken } from '../Service/auth.js';
 
 
 interface MovieAggregation {

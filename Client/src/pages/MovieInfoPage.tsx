@@ -12,10 +12,10 @@ interface MovieDetails extends Movie {
   reviews: Review[];
 }
 
-interface UserReview {
-  rating: number;
-  comment: string;
-}
+// interface UserReview {
+//   rating: number;
+//   comment: string;
+// }
 
 const MovieInfoPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -227,7 +227,7 @@ const MovieInfoPage: React.FC = () => {
                               <StarIcon
                                 key={star}
                                 className={`w-4 h-4 ${
-                                  star <= review.rating
+                                  star <= (review?.rating ?? 0)
                                     ? 'text-yellow-400 fill-yellow-400'
                                     : 'text-gray-300'
                                 }`}
@@ -238,7 +238,7 @@ const MovieInfoPage: React.FC = () => {
                             by {review.username}
                           </span>
                         </div>
-                        <p className="text-gray-700">{review.comment}</p>
+                        <p className="text-gray-700">{review.note}</p>
                       </div>
                     ))}
                   </div>
@@ -255,7 +255,7 @@ const MovieInfoPage: React.FC = () => {
           isOpen={showWatchlistModal}
           onClose={() => setShowWatchlistModal(false)}
           movie={{
-            id: movie.id,
+            id:parseInt(movie?.id),
             title: movie.title,
             posterURL: movie.poster_path
           }}
