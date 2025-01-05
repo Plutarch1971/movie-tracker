@@ -3,11 +3,11 @@ import { MovieTrackService } from '../../Service/movieTrackService.js';
 import { autheticateToken } from '../../middleware/apiTokenAuth.js';
 
 
-const router = Router();
+const APIrouter = Router();
 const movieService = new MovieTrackService();
 
 //search movies
-router.get('/search', autheticateToken, async (req: Request, res: Response) => {
+APIrouter.get('/search', autheticateToken, async (req: Request, res: Response) => {
     try{
         const query = req.query.q as string;
         if(!query){
@@ -23,7 +23,7 @@ router.get('/search', autheticateToken, async (req: Request, res: Response) => {
 });
 
 //get movie details
-router.get('/:movieId', autheticateToken, async (req: Request, res: Response) => {
+APIrouter.get('/:movieId', autheticateToken, async (req: Request, res: Response) => {
     try{
         const movieId = parseInt(req.params.movieId);
         if (isNaN(movieId)){
@@ -39,4 +39,4 @@ router.get('/:movieId', autheticateToken, async (req: Request, res: Response) =>
 });
 
 
-export default router;
+export default APIrouter;

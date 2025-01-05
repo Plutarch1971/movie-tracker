@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '/src/assets/styles/searchResults.css';
+import { useNavigate } from 'react-router-dom';
 
 interface Movie {
   id: number;
@@ -80,29 +81,41 @@ const SearchResultsPage: React.FC = () => {
     searchMovies(searchTerm);
   };
 
-  const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => (
-    <div className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200" style={{ width: '250px' }}>
-      {movie.poster_path ? (
-        <img
-          src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
-          alt={movie.original_title}
-          className="w-full h-64 object-cover"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = '/api/placeholder/185/278';
-            target.alt = 'Image not available';
-          }}
-        />
-      ) : (
-        <div className="w-full h-64 bg-gray-200 flex items-center justify-center text-gray-500">
-          No Image Available
+  const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
+    const navigate = useNavigate();
+  
+    const handleClick = () => {
+      navigate(`/movie/${movie.id}`);
+    };
+  
+    return (
+      <div 
+        className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer" 
+        style={{ width: '250px' }}
+        onClick={handleClick}
+      >
+        {movie.poster_path ? (
+          <img
+            src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
+            alt={movie.original_title}
+            className="w-full h-64 object-cover"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = '/api/placeholder/185/278';
+              target.alt = 'Image not available';
+            }}
+          />
+        ) : (
+          <div className="w-full h-64 bg-gray-200 flex items-center justify-center text-gray-500">
+            No Image Available
+          </div>
+        )}
+        <div className="p-4">
+          <h4 className="font-medium text-lg line-clamp-2">{movie.original_title}</h4>
         </div>
-      )}
-      <div className="p-4">
-        <h4 className="font-medium text-lg line-clamp-2">{movie.original_title}</h4>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="min-h-screen">

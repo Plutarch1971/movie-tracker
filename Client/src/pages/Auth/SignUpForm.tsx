@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useMutation } from '@apollo/client';
-import {Form, Button} from 'react-bootstrap';
+import {Form} from 'react-bootstrap';
 import { ADD_USER } from '../../graphql/mutations';
 import AuthService from '../../utils/auth';
 import type { User } from '../../models/User';
