@@ -1,6 +1,6 @@
 import {Router, type Request, type Response} from 'express';
-import { MovieTrackService } from '../../Service/movieTrackService';
-import { autheticateToken } from '../../middleware/apiTokenAuth';
+import { MovieTrackService } from '../../Service/movieTrackService.js';
+import { autheticateToken } from '../../middleware/apiTokenAuth.js';
 
 
 const router = Router();

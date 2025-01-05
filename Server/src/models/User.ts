@@ -2,10 +2,11 @@ import mongoose, { Schema, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 export interface IUser extends Document {
-  id: string;
   username: string;
   password: string;
-  watchlist_id: mongoose.Types.ObjectId[];
+  watchlists: mongoose.Types.ObjectId[];
+  reviews: mongoose.Types.ObjectId[];
+  isCorrectPassword(password: string): Promise<boolean>;
 }
 
 const UserSchema = new Schema({
@@ -18,15 +19,18 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  watchlist_id: [{
+  watchlists: [{
     type: Schema.Types.ObjectId,
     ref: 'Watchlist'
+  }],
+  reviews: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Review'
   }]
 }, {
   timestamps: true
 });
 
-// Hash password before saving
 UserSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   
@@ -34,5 +38,9 @@ UserSchema.pre('save', async function(next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+UserSchema.methods.isCorrectPassword = async function (password: string): Promise<boolean> {
+  return bcrypt.compare(password, this.password);
+};
 
 export default mongoose.model<IUser>('User', UserSchema);

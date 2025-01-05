@@ -1,5 +1,6 @@
 import{Request, Response, NextFunction} from 'express';
 import jwt from 'jsonwebtoken';
+import { IUser } from '../models/User';
 
 export const autheticateToken = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers['authorization'];
@@ -13,8 +14,8 @@ export const autheticateToken = (req: Request, res: Response, next: NextFunction
     }
 
     try{
-        const payload = jwt.verify(token, process.env.API_TOKEN_SECRET as string);
-        req.user = payload;
+        const payload = jwt.verify(token, process.env.API_TOKEN_SECRET as string) as { user: IUser};
+        req.user = payload.user;
         next();
         return;
     }catch(error){

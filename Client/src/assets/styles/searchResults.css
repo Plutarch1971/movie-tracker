@@ -1,16 +1,32 @@
 .placeholder-lg::placeholder {
     font-size: 1.25rem; /* Adjust the size as needed */
   }
-  .search-results-container{
-    width: 100%;  
+
+  
+  .search-results-container {
+    color: black;
+    width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    
-    /* padding-left: 20px; */
+    gap: 20px;
+    overflow-y: auto; /* Handle vertical overflow */
+    max-height: 65vh; /* Adjust as needed */
   }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
   .search-container {
     width: 100%;
     display: flex;
@@ -24,13 +40,13 @@
     gap: 20px;
   }
   .search-bar {
+    width: 100%;
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
   }
   .search-container h1 {
-    display:flex;
-    justify-content: center;
+    text-align: center;
   }
   .search-container label {
     font-size: 1.5rem; /* Adjust the font size as needed */
@@ -38,20 +54,43 @@
     /* justify-content: left; */
   }
   .search-container input {
-    width: 810px;; /* Adjust the width to account for margins/padding */
+    width: 50%;
     height: 50px;
-    box-sizing: border-box; /* Ensure padding and border are included in the width */
-    justify-content:center; 
+    box-sizing: border-box;
   }
+
   .search-container button {
-    width: 810px;
-    margin-top: 20px;
-    background-color: rgb(185 205 89);
+    width: 20%;
+    margin-top: 10px;
+    background-color: rgb(198, 236, 8);
     color: black;
     font-size: 20px;
     font-weight: bold;
-    border: 4 rgb(32, 119, 196) solid;
+    border: 4px rgb(32, 119, 196) solid;
     height: 55px;
-    padding-top: 10px;;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .search-container button:hover {
+    background-color: rgb(175 195 79);
+  }
+  
+  .search-container button:disabled {
+    background-color: rgb(200 200 200);
+    cursor: not-allowed;
+  }
+
+  .search-Results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1900px;
+    margin: 0 auto;
+    padding: 20px;
+    overflow: hidden;
   }
   

@@ -9,6 +9,7 @@
       // "noEmitOnError": true /* Disable emitting files if any type checking errors are reported. */
     },
     "include": ["src"],
-    "typeRoots": ["./node_modules/@types", "./src/types"]
+    "typeRoots": ["./node_modules/@types", "./src/custom.d.ts"]
+   // "typeRoots": ["./node_modules/@types", "./src/types"]
   }
   

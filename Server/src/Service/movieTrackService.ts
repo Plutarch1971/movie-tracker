@@ -32,18 +32,18 @@ class MovieTrackService{
 
     constructor(){
         this.apiKey = process.env.TMBD_API_KEY || '';
-        if(this.apiKey === ''){
-            throw new Error('TMBD API key not found');
-        }
+     //   if(this.apiKey === ''){
+    //        throw new Error('TMBD API key not found');
+     //   }
     }
 
 
     async searchMovies(query: string): Promise<Movie[]> {
         try{
-            const response = await axios.get(`${this.baseUrl}/search/movie`, {
+           const response = await axios.get(`${this.baseUrl}/search/movie`, {
                 params: {
                     api_key: this.apiKey,
-                    query: query
+                   query: query
                 }
             });
 
@@ -84,16 +84,16 @@ class MovieTrackService{
             const movieData = movieDetails
             const castData = castDetails
 
-            const year = new Date(movieData.release_data).getFullYear();
+            const year = new Date(movieData.data.release_date).getFullYear();
 
             return new Movie(
-                movieData.title,
-                castData.cast.map(cast => cast.name),
-                movieData.runtime,
-                movieData.genres.map(genre => genre.name),
+                movieData.data.title,
+                castData.data.cast.map(cast => cast.name),
+                movieData.data.runtime,
+                movieData.data.genres.map(genre => genre.name),
                 0,
                 year,
-                movieData.overview
+                movieData.data.overview
             );
         }catch (error){
             throw new Error(`Failed to get movie details`);

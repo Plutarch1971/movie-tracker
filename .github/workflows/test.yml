@@ -1,0 +1,38 @@
+name: Test workflow
+
+on:
+  pull_request:
+    branches:
+      - '*'         # matches every branch that doesn't contain a '/'
+      - '*/*'       # matches every branch containing a single '/'
+      - '**'        # matches every branch
+      - '!main'   # excludes master
+
+jobs:
+  test:
+    # Operating system to run job on
+    runs-on: ubuntu-latest
+
+    # Steps in job
+    steps:
+      # Get code from repo
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Use Node.js 21.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 21.x
+
+      # Install dependencies
+      - name: Install Dependencies
+        run: npm install
+        
+
+      # Run build
+      - name: Run Build
+        run: npm run develop
+
+      # Run tests
+      - name: Run cypress test
+        run: npm run test-component
