@@ -13,12 +13,12 @@ interface Context {
   user: IUser & { _id: ObjectId }; // Ensure _id is always present
 }
 
-interface AddUserArgs {
-  input: {
-    username: string;
-    password: string;
-  };
-}
+// interface AddUserArgs {
+//   input: {
+//     username: string;
+//     password: string;
+//   };
+// }
 
 interface LoginArgs {
   username: string;
@@ -66,13 +66,15 @@ export const resolvers = {
 
   Mutation: {
 
-    addUser: async (_parent: any, { input }: AddUserArgs) => {
+    addUser: async (_parent: any,  input : any) => {
       // Create a nnew user with the provieded input
-      const user = await User.create({...input});
+
+      const { password, username} = input;
+      const user = await User.create({password:password, username:username});
 
       // Sign a JWT token with the user's username and id
       const token = signToken(user.username, user._id);
-
+      console.log("Token:", token);
       return { token, user };
     },
 

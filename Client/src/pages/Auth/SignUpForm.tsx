@@ -36,6 +36,7 @@ function SignupForm (): JSX.Element {
                 password: signupFormData.password
                },
             });
+            console.log("Data variables:", data);
             AuthService.login(data.addUser.token)
         } catch (err) {
             console.error('Problem adding User', err);

@@ -22,7 +22,7 @@ const SearchResultsPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [totalResults, setTotalResults] = useState(0);
 
-  const API_URL = 'https://api.themoviedb.org/3';
+  const API_URL = import.meta.env.VITE_API_URL;
   const API_Token = import.meta.env.VITE_API_TOKEN_SECRET;
   const MAX_RESULTS = 30;
 
@@ -39,9 +39,9 @@ const SearchResultsPage: React.FC = () => {
       if (!API_Token) {
         throw new Error('API Token is missing');
       }
-
+     
       const response = await fetch(
-        `${API_URL}/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=1&include_adult=false`,
+        `${API_URL}/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=1&include_adult=false`,
         {
           headers: {
             'Authorization': `Bearer ${API_Token}`,
