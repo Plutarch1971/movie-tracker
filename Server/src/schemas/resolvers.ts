@@ -45,9 +45,22 @@ export const resolvers = {
   Query: {
     me: async (_: unknown, __: unknown, context: Context) => {
       if (!context.user) throw new AuthenticationError('Not authenticated');
-      return User.findById(context.user._id)
-        .populate('reviews')
+      // Force populate both watchlists and reviews
+      const user = await User.findById(context.user._id)
+        .populate({
+          path: 'reviews',
+          options: { sort: { date: -1 } }
+        })
         .populate('watchlists');
+      
+      if (!user) throw new AuthenticationError('User not found');
+      
+      // Ensure we return empty arrays instead of null
+      return {
+        ...user.toObject(),
+        watchlists: user.watchlists || [],
+        reviews: user.reviews || []
+      };
     },
 
     getUserReviews: async (_: unknown, { userId }: { userId: string }) => {
@@ -74,44 +87,39 @@ export const resolvers = {
     },
 
       
-      getTopRatedMovies: async (_: unknown, { limit = 10 }: { limit?: number }) => {
-        try {
-          const reviews = await Review.aggregate([
-            {
-              $match: {
-                rating: { $exists: true, $ne: null }  // Only include reviews with ratings
-              }
-            },
-            {
-              $group: {
-                _id: '$movie_id',
-                averageRating: { $avg: '$rating' },
-                numberOfReviews: { $sum: 1 }
-              }
-            },
-            {
-              $match: {
-                numberOfReviews: { $gte: 3 }
-              }
-            },
-            {
-              $sort: { averageRating: -1 }
-            },
-            {
-              $limit: limit
+    getTopRatedMovies: async (_: unknown, { limit = 10 }: { limit?: number }) => {
+      try {
+        const reviews = await Review.aggregate([
+          {
+            $match: {
+              rating: { $exists: true, $ne: null }
             }
-          ]);
-  
-          return reviews.map(review => ({
-            movie_id: review._id,
-            averageRating: parseFloat(review.averageRating.toFixed(1)),
-            numberOfReviews: review.numberOfReviews
-          }));
-        } catch (error) {
-          console.error('Error in getTopRatedMovies:', error);
-          throw new Error('Failed to fetch top rated movies');
-        }
-      },
+          },
+          {
+            $group: {
+              _id: '$movie_id',
+              averageRating: { $avg: '$rating' },
+              numberOfReviews: { $sum: 1 }
+            }
+          },
+          {
+            $sort: { averageRating: -1 }
+          },
+          {
+            $limit: limit
+          }
+        ]);
+    
+        return reviews.map(review => ({
+          movie_id: review._id,
+          averageRating: parseFloat(review.averageRating.toFixed(1)),
+          numberOfReviews: review.numberOfReviews
+        }));
+      } catch (error) {
+        console.error('Error in getTopRatedMovies:', error);
+        throw new Error('Failed to fetch top rated movies');
+      }
+    },
   
       getRecentReviews: async (_: unknown, { limit = 10 }: { limit?: number }) => {
         try {
@@ -173,6 +181,8 @@ export const resolvers = {
           throw new Error('Failed to fetch most reviewed movies');
         }
       },
+
+
   },
     
 
@@ -303,6 +313,60 @@ export const resolvers = {
         watched: movieData.watched || false
       });
 
+      return await watchlist.save();
+    },
+    deleteWatchlist: async (_: unknown, { watchlistId }: { watchlistId: string }, context: Context) => {
+      if (!context.user) throw new AuthenticationError('Not authenticated');
+    
+      const watchlist = await Watchlist.findById(watchlistId);
+      if (!watchlist) throw new AuthenticationError('Watchlist not found');
+    
+      if (watchlist.user_id.toString() !== context.user._id.toString()) {
+        throw new AuthenticationError('Not authorized to delete this watchlist');
+      }
+    
+      await User.findByIdAndUpdate(context.user._id, {
+        $pull: { watchlists: new mongoose.Types.ObjectId(watchlistId) }
+      });
+    
+      await Watchlist.findByIdAndDelete(watchlistId);
+      return true;
+    },
+    
+    removeMovieFromWatchlist: async (_: unknown, 
+      { watchlistId, movieId }: { watchlistId: string; movieId: string }, 
+      context: Context
+    ) => {
+      if (!context.user) throw new AuthenticationError('Not authenticated');
+    
+      const watchlist = await Watchlist.findById(watchlistId);
+      if (!watchlist) throw new AuthenticationError('Watchlist not found');
+    
+      if (watchlist.user_id.toString() !== context.user._id.toString()) {
+        throw new AuthenticationError('Not authorized to modify this watchlist');
+      }
+    
+      watchlist.movies = watchlist.movies.filter(m => m.movie_id !== movieId);
+      return await watchlist.save();
+    },
+
+    updateMovieWatchedStatus: async (_: unknown,
+      { watchlistId, movieId, watched }: { watchlistId: string; movieId: string; watched: boolean },
+      context: Context
+    ) => {
+      if (!context.user) throw new AuthenticationError('Not authenticated');
+    
+      const watchlist = await Watchlist.findById(watchlistId);
+      if (!watchlist) throw new AuthenticationError('Watchlist not found');
+    
+      if (watchlist.user_id.toString() !== context.user._id.toString()) {
+        throw new AuthenticationError('Not authorized to modify this watchlist');
+      }
+    
+      const movieIndex = watchlist.movies.findIndex(m => m.movie_id === movieId);
+      if (movieIndex === -1) throw new Error('Movie not found in watchlist');
+    
+      watchlist.movies[movieIndex].watched = watched;
       return await watchlist.save();
     },
   },

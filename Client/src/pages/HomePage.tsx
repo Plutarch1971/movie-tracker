@@ -38,7 +38,13 @@ const HomePage: React.FC = () => {
       { 
         variables: { limit: 10 },
         notifyOnNetworkStatusChange: true,
-        errorPolicy: 'all'
+        errorPolicy: 'all',
+        onError: (error) => {
+          console.error('Top Rated Query Error:', error);
+        },
+        onCompleted: (data) => {
+          console.log('Top Rated Query Completed:', data);
+        }
       }
     );
 
@@ -99,7 +105,11 @@ const HomePage: React.FC = () => {
     if (allMovieIds.length > 0) {
       fetchMovieDetails(allMovieIds);
     }
-  }, [topRatedData, recentReviewsData, mostReviewedData]);
+
+    console.log('Top Rated Data:', topRatedData);
+    console.log('Top Rated Error:', topRatedError);
+
+  }, [topRatedData, topRatedError, recentReviewsData, mostReviewedData]);
 
   const RatedMovieSection: React.FC<{ 
     title: string; 

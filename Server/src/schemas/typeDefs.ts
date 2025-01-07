@@ -70,9 +70,9 @@ export const typeDefs = gql`
     getUserWatchlists(userId: ID!): [Watchlist!]!
     getMovieReviews(movieId: String!): [Review!]!
     getMovieRating(movieId: String!): MovieRating!
-    getTopRatedMovies(limit: Int): [TopRatedMovie]
-    getRecentReviews(limit: Int): [Review]
-    getMostReviewedMovies(limit: Int): [TopRatedMovie]
+    getTopRatedMovies(limit: Int!): [TopRatedMovie!]!
+    getRecentReviews(limit: Int!): [Review!]!
+    getMostReviewedMovies(limit: Int!): [TopRatedMovie!]!
   }
 
   type Mutation {

@@ -50,7 +50,7 @@ export const GET_MOVIE_RATING = gql`
 `;
 
 export const GET_TOP_RATED_MOVIES = gql`
-  query GetTopRatedMovies($limit: Int) {
+  query GetTopRatedMovies($limit: Int!) {
     getTopRatedMovies(limit: $limit) {
       movie_id
       averageRating
@@ -60,7 +60,7 @@ export const GET_TOP_RATED_MOVIES = gql`
 `;
 
 export const GET_RECENT_REVIEWS = gql`
-  query GetRecentReviews($limit: Int) {
+  query GetRecentReviews($limit: Int!) {
     getRecentReviews(limit: $limit) {
       _id
       movie_id
@@ -76,7 +76,7 @@ export const GET_RECENT_REVIEWS = gql`
 `;
 
 export const GET_MOST_REVIEWED_MOVIES = gql`
-  query GetMostReviewedMovies($limit: Int) {
+  query GetMostReviewedMovies($limit: Int!) {
     getMostReviewedMovies(limit: $limit) {
       movie_id
       averageRating

@@ -6,9 +6,9 @@ import type { Movie } from '../models/Movie';
 import type { Review } from '../models/Review';
 import { AddItemModal } from '../components/Watchlist/AddItemModal';
 import '/src/assets/styles/movieinfo.css';
-import  { ADD_REVIEW } from '../graphql/mutations';
+import  { ADD_REVIEW,  } from '../graphql/mutations';
 import { useMutation, useQuery } from '@apollo/client';
-import { QUERY_REVIEWS, GET_MOVIE_RATING } from '../graphql/queries';
+import { QUERY_REVIEWS, GET_MOVIE_RATING, } from '../graphql/queries';
 import Auth from '../utils/auth';
 
 interface MovieDetails extends Movie {
@@ -41,6 +41,7 @@ const MovieInfoPage: React.FC = () => {
     skip: !id
   });
 
+ 
   const [review] = useMutation(ADD_REVIEW, { 
     refetchQueries:[
       { query: 
@@ -211,6 +212,14 @@ const MovieInfoPage: React.FC = () => {
                   </div>
                 </div>
               </div>
+              
+              {isLoggedIn && (
+              <button
+              onClick={() => setShowWatchlistModal(true)}
+              className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 mb-4">
+                          Add to Watchlist
+               </button>
+                 )}
 
               <div className="movie-details">
                 <div>
@@ -306,17 +315,17 @@ const MovieInfoPage: React.FC = () => {
           </div>
         </div>
       </div>
-      {showWatchlistModal && (
+      {showWatchlistModal && movie && (
         <AddItemModal
           isOpen={showWatchlistModal}
           onClose={() => setShowWatchlistModal(false)}
           movie={{
-            id:parseInt(movie?.id),
+            id: Number(movie.id),
             title: movie.title,
             posterURL: movie.poster_path
           }}
         />
-      )}
+  )}
     </div>
   );
 };
