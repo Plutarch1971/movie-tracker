@@ -1,4 +1,7 @@
 .movie-info-container {
+    /* display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem; */
     min-height: 100vh;
     background-color: rgb(249, 250, 251);
     color: black;

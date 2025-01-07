@@ -9,6 +9,7 @@ import MovieInfoPage from "./pages/MovieInfoPage";
 import SignUp from "./pages/Auth/SignUpForm.tsx";
 import Login from "./pages/Auth/LoginForm.tsx";
 
+
 const router = createBrowserRouter([
     {
         path:'/',
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <HomePage />
+                element: <Login />
             },
             {
                 path: "/search",
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
                 path: "/login",
                 element: <Login />
             },
+            {
+                path: "/home",
+                element: <HomePage />
+            }
 
         ]
     }
