@@ -214,16 +214,17 @@ const MovieInfoPage: React.FC = () => {
 
               <div className="movie-details">
                 <div>
-                  <p><span className="font-semibold">Runtime:</span> {movie.runtime} minutes</p>
-                  <p><span className="font-semibold">Release Date:</span> {movie.release_date}</p>
-                  <p><span className="font-semibold">Genre:</span> {movie.genre}</p>
+                  <p><b>Runtime:</b> {movie.runtime} minutes</p>
+                  <p><b>Release Date:</b> {movie.release_date}</p>
+                  
                 </div>
                 <div>
-                  <p><span className="font-semibold">Cast:</span> {movie.cast}</p>
+                  <p><b>Genre:</b> {movie.genre}</p>
+                  <p><b>Cast:</b> {movie.cast}</p>
                 </div>
               </div>
 
-              <p className="mb-6">{movie.overview}</p>
+              <p className="mb-6"><b>Overview:</b><p>{movie.overview}</p></p>
 
               {isLoggedIn && (
                 <div className="mb-8">
