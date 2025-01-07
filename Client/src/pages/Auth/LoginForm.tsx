@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 
 import { LOGIN_USER } from '../../graphql/mutations';
 import AuthService from '../../utils/auth';
@@ -10,6 +11,7 @@ import '/src/assets/styles/loginForm.css';
 
 
 function LoginForm () : JSX.Element {
+    const navigate = useNavigate();
     const [ userFormData , setUserFormData ] = useState<User>({
         username: '',
         password: '',
@@ -24,6 +26,13 @@ function LoginForm () : JSX.Element {
     const [ login, { error } ] = useMutation(LOGIN_USER);
     console.log("Error:", error);
 
+    // Check if user is already logged In
+    // useEffect(() => {
+    //     if (AuthService.loggedIn()) {
+    //         navigate('/profile');
+    //     }
+    // }, [navigate]);
+
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setUserFormData({ ...userFormData, [name]: value});
@@ -35,9 +44,25 @@ function LoginForm () : JSX.Element {
        
         try {
             const { data } = await login ({
-                variables: { username: userFormData.username, password:userFormData.password},
+                variables: { 
+                    username: userFormData.username, 
+                    password:userFormData.password
+                },
             });
-            AuthService.login(data.login.token);
+            if (data.login.token) {
+                AuthService.login(data.login.token);
+                // Clear form data
+                setUserFormData({
+                    username: '',
+                    password: '',
+                    watchlist: [],
+                    reviews: [],
+                });
+            }
+           
+            // Navigate to home page
+            navigate('/home', { replace: true});
+        
         } catch (err) {
             console.error('Problem logging User', err);
             setShowAlert(true);
@@ -65,7 +90,7 @@ function LoginForm () : JSX.Element {
             />
             <label htmlFor="password">Password:</label>
             <input 
-            type="text" 
+            type="password" 
             id="password"
             name="password"
             onChange={handleInputChange}

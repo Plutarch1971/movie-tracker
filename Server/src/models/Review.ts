@@ -5,7 +5,7 @@ export interface IReview extends Document {
   movie_id: string;
   date: Date;
   note: string;
-  rating?: number;
+  rating: number;
 }
 
 // Add interface for static methods
@@ -39,6 +39,28 @@ const ReviewSchema = new Schema({
   }
 });
 
+// ReviewSchema.statics.getMovieAverageRating = async function(movieId: string): Promise<number> {
+//   const result = await this.aggregate([
+//     { $match: { movie_id: movieId } },
+//     { 
+//       $group: { 
+//         _id: null, 
+//         averageRating: { $avg: '$rating' }, 
+//         numberOfReviews: { $sum: 1 } 
+//       } 
+//     }
+//   ]);
+//   return result[0]?.averageRating || 0;
+// };
+
+// ReviewSchema.index({ user_id: 1, movie_id: 1 }, { unique: true });
+ReviewSchema.virtual('user', {
+  ref: 'User',
+  localField: 'user_id',
+  foreignField: '_id',
+  justOne: true
+});
+
 ReviewSchema.statics.getMovieAverageRating = async function(movieId: string): Promise<number> {
   const result = await this.aggregate([
     { $match: { movie_id: movieId } },
@@ -52,6 +74,7 @@ ReviewSchema.statics.getMovieAverageRating = async function(movieId: string): Pr
   ]);
   return result[0]?.averageRating || 0;
 };
+
 
 ReviewSchema.index({ user_id: 1, movie_id: 1 }, { unique: true });
 

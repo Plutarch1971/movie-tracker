@@ -3,6 +3,7 @@ import auth from "../utils/auth";
 import type { User } from "../models/User";
 
 
+
 const ProfilePage = () => {
   const [userData, setUserData] = useState<User>({
     username: '',
