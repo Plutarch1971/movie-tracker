@@ -16,11 +16,6 @@ interface MovieDetails extends Movie {
   reviews: Review[];
 }
 
-// interface UserReview {
-//   rating: number;
-//   comment: string;
-// }
-
 const MovieInfoPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [movie, setMovie] = useState<MovieDetails | null>(null);
@@ -43,20 +38,14 @@ const MovieInfoPage: React.FC = () => {
 
   const [review] = useMutation(ADD_REVIEW, { 
     refetchQueries:[
-      { query: 
-        QUERY_REVIEWS, 
-        variables: { movieId: id } },
-        {query: 
-          GET_MOVIE_RATING,
-          variables: { movieId: id }},
-    
+      { query: QUERY_REVIEWS, variables: { movieId: id } },
+      { query: GET_MOVIE_RATING, variables: { movieId: id } },
     ]
   });
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        // Fetch movie details from TMDB
         const movieResponse = await fetch(
           `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits`,
           {
@@ -68,8 +57,6 @@ const MovieInfoPage: React.FC = () => {
         );
         
         const movieData = await movieResponse.json();
-        
-        // Fetch reviews and ratings from your database
         const reviewsResponse = await axios.get(`/api/movies/${id}/reviews`);
         
         setMovie({
@@ -100,23 +87,6 @@ const MovieInfoPage: React.FC = () => {
     }
   }, [id]);
 
-  const handleRatingSubmit = async () => {
-    if (!isLoggedIn) {
-      setError('Please log in to rate movies');
-      return;
-    }
-
-    try {
-      await axios.post(`/api/movies/${id}/ratings`, {
-        rating: userRating
-      });
-      // Refresh movie data to update ratings
-      window.location.reload();
-    } catch (err) {
-      setError('Failed to submit rating');
-    }
-  };
-
   const handleReviewSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!Auth.loggedIn()) {
@@ -142,31 +112,6 @@ const MovieInfoPage: React.FC = () => {
       console.error('Error submitting review:', err);
     }
   };
-   //   if (!isLoggedIn) {
-  //     setError('Please log in to review movies');
-  //     return;
-  //   }
-
-  //   try {
-  //     await axios.post(`/api/movies/${id}/reviews`, {
-  //       rating: userRating,
-  //       note: reviewText
-  //     },
-  //   {
-  //       headers: {
-  //           'Authorization': `Bearer ${localStorage.getItem('id_token')}`
-  //       }
-  //   });
-  //     // Refresh movie data to update reviews
-  //     window.location.reload();
-  //   } catch (err) {
-  //       if (axios.isAxiosError(err) && err.response?.status === 400) {
-  //           setError('You have already reviewed this movie');
-  //         } else {
-  //           setError('Failed to submit review');
-  //         }
-  //   }
-  // };
 
   if (isLoading) return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
   if (error) return <div className="flex justify-center items-center min-h-screen text-red-600">{error}</div>;
@@ -216,7 +161,6 @@ const MovieInfoPage: React.FC = () => {
                 <div>
                   <p><b>Runtime:</b> {movie.runtime} minutes</p>
                   <p><b>Release Date:</b> {movie.release_date}</p>
-                  
                 </div>
                 <div>
                   <p><b>Genre:</b> {movie.genre}</p>
@@ -244,12 +188,6 @@ const MovieInfoPage: React.FC = () => {
                       />
                     ))}
                   </div>
-                  <button
-                    onClick={handleRatingSubmit}
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                  >
-                    Submit Rating
-                  </button>
                 </div>
               )}
 
@@ -270,40 +208,38 @@ const MovieInfoPage: React.FC = () => {
                   </button>
                 </div>
               )}
-              </div>
-              <div className="mt-8">
-                <h3 className="text-xl font-semibold mb-4">Reviews</h3>
-                {reviews.length > 0 ? (
-                  <div className="space-y-4">
-                   {reviews.map((reviews: { _id: string; rating: number; note: string; user: { username: string } }) => (
-                      <div key={reviews._id} className="border-b pb-4">
-                        <div className="flex items-center mb-2">
-                          <div className="flex items-center">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <StarIcon
-                                key={star}
-                                className={`w-4 h-4 ${
-                                  star <= reviews.rating
-                                    ? 'text-yellow-400 fill-yellow-400'
-                                    : 'text-gray-300'
-                                }`}
-                              />
-                            ))}
-                          </div>
-                          <span className="ml-2 text-sm text-gray-600">
-                            by {reviews.user.username}
-                          </span>
+            </div>
+            <div className="mt-8">
+              <h3 className="text-xl font-semibold mb-4">Reviews</h3>
+              {reviews.length > 0 ? (
+                <div className="space-y-4">
+                  {reviews.map((reviews: { _id: string; rating: number; note: string; user: { username: string } }) => (
+                    <div key={reviews._id} className="border-b pb-4">
+                      <div className="flex items-center mb-2">
+                        <div className="flex items-center">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <StarIcon
+                              key={star}
+                              className={`w-4 h-4 ${
+                                star <= reviews.rating
+                                  ? 'text-yellow-400 fill-yellow-400'
+                                  : 'text-gray-300'
+                              }`}
+                            />
+                          ))}
                         </div>
-                        <p className="text-gray-700">{reviews.note}</p>
+                        <span className="ml-2 text-sm text-gray-600">
+                          by {reviews.user.username}
+                        </span>
                       </div>
-                    ))}
-
-                  </div>
-                ) : (
-                  <p className="text-gray-500">No reviews yet. Be the first to review!</p>
-                )}
-              </div>
-            
+                      <p className="text-gray-700">{reviews.note}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500">No reviews yet. Be the first to review!</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -312,7 +248,7 @@ const MovieInfoPage: React.FC = () => {
           isOpen={showWatchlistModal}
           onClose={() => setShowWatchlistModal(false)}
           movie={{
-            id:parseInt(movie?.id),
+            id: parseInt(movie?.id),
             title: movie.title,
             posterURL: movie.poster_path
           }}
