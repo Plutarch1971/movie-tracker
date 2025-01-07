@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, type FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { StarIcon } from "lucide-react";
 import axios from 'axios';
@@ -6,6 +6,10 @@ import type { Movie } from '../models/Movie';
 import type { Review } from '../models/Review';
 import { AddItemModal } from '../components/Watchlist/AddItemModal';
 import '/src/assets/styles/movieinfo.css';
+import  { ADD_REVIEW } from '../graphql/mutations';
+import { useMutation } from '@apollo/client';
+import { QUERY_REVIEWS, GET_ME} from '../graphql/queries';
+import Auth from '../utils/auth';
 
 interface MovieDetails extends Movie {
   averageRating: number;
@@ -27,6 +31,15 @@ const MovieInfoPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showWatchlistModal, setShowWatchlistModal] = useState(false);
+  const [note, setNote ] = useState('');
+  const [review] = useMutation(ADD_REVIEW, { 
+    refetchQueries:[
+        QUERY_REVIEWS,
+        'getReviews',
+        GET_ME,
+        'me'
+    ]
+  });
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -67,7 +80,7 @@ const MovieInfoPage: React.FC = () => {
       }
     };
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('id_token');
     setIsLoggedIn(!!token);
 
     if (id) {
@@ -92,32 +105,63 @@ const MovieInfoPage: React.FC = () => {
     }
   };
 
-  const handleReviewSubmit = async () => {
-    if (!isLoggedIn) {
-      setError('Please log in to review movies');
-      return;
-    }
-
-    try {
-      await axios.post(`/api/movies/${id}/reviews`, {
-        rating: userRating,
-        comment: reviewText
-      },
-    {
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+ const handleReviewSubmit = async (event:FormEvent) => {
+  if (!isLoggedIn) {
+    setError('Please log in to review movies');
+    return;
+  }
+  event.preventDefault();
+  try {
+    console.log('Submitting review for movie:', id); // Debug log
+    await review({ 
+      variables: { input: {
+        note,
+        user: Auth.getProfile().data.username,
+      }}
     });
-      // Refresh movie data to update reviews
-      window.location.reload();
+    setNote('');
+    window.location.reload();
     } catch (err) {
-        if (axios.isAxiosError(err) && err.response?.status === 400) {
-            setError('You have already reviewed this movie');
-          } else {
-            setError('Failed to submit review');
-          }
+    if (axios.isAxiosError(err)) {
+      console.error('Review submission error:', err.response?.data || err.message);
+      if (err.response?.status === 400) {
+        setError('You have already reviewed this movie');
+      } else if (err.response?.status === 401) {
+        setError('Please log in to review movies');
+      } else {
+        setError(`Failed to submit review: ${err.response?.data?.error || 'Unknown error'}`);
+      }
+    } else {
+      console.error('Unexpected error:', err);
+      setError('Failed to submit review');
     }
-  };
+  }
+};
+  //   if (!isLoggedIn) {
+  //     setError('Please log in to review movies');
+  //     return;
+  //   }
+
+  //   try {
+  //     await axios.post(`/api/movies/${id}/reviews`, {
+  //       rating: userRating,
+  //       note: reviewText
+  //     },
+  //   {
+  //       headers: {
+  //           'Authorization': `Bearer ${localStorage.getItem('id_token')}`
+  //       }
+  //   });
+  //     // Refresh movie data to update reviews
+  //     window.location.reload();
+  //   } catch (err) {
+  //       if (axios.isAxiosError(err) && err.response?.status === 400) {
+  //           setError('You have already reviewed this movie');
+  //         } else {
+  //           setError('Failed to submit review');
+  //         }
+  //   }
+  // };
 
   if (isLoading) return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
   if (error) return <div className="flex justify-center items-center min-h-screen text-red-600">{error}</div>;
@@ -214,7 +258,7 @@ const MovieInfoPage: React.FC = () => {
                   </button>
                 </div>
               )}
-
+              </div>
               <div className="mt-8">
                 <h3 className="text-xl font-semibold mb-4">Reviews</h3>
                 {movie.reviews.length > 0 ? (
@@ -246,7 +290,7 @@ const MovieInfoPage: React.FC = () => {
                   <p className="text-gray-500">No reviews yet. Be the first to review!</p>
                 )}
               </div>
-            </div>
+            
           </div>
         </div>
       </div>

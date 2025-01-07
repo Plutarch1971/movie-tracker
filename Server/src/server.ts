@@ -63,7 +63,7 @@ const startServer = async () => {
 
     // REST API Routes
     app.use('/api/movies', APIRouter);
-    app.use('/our-api', router);
+    app.use('/our-api/movies', router);
 
     // Health check endpoint
     app.get('/health', (_req, res) => {
