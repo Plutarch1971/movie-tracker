@@ -25,10 +25,14 @@ interface LoginArgs {
   password: string;
 }
 
-interface ReviewInput {
-  movie_id: string;
-  note: string;
-  rating: number;
+interface addReviewArgs {
+  input: {
+    movie_id: string;
+    note: string;
+    username: string;
+  }
+  
+  //rating: number;
 }
 
 interface WatchlistInput {
@@ -92,21 +96,19 @@ export const resolvers = {
       return { token, user };
     },
 
-    addReview: async (_: unknown, { reviewData }: { reviewData: ReviewInput }, context: Context) => {
+    addReview: async (_parent: any, { input }: addReviewArgs , context: Context) => {
       if (!context.user) throw new AuthenticationError('Not authenticated');
 
-      const newReview = new Review({
-        ...reviewData,
-        user_id: context.user._id,
-      });
+      const review = await Review.create({
+        ...input
+      })
 
-      const user = await User.findById(context.user._id);
-      if (!user) throw new AuthenticationError('User not found');
-      
-      user.reviews.push(newReview.id);
-      await user.save();
-
-      return await newReview.save();
+     await User.findOneAndUpdate( 
+      { _id: context.user._id},
+      { $addToSet:{ reviews: review._id}}
+     );
+    
+      return review;
     },
 
     removeReview: async (_: unknown, { reviewId }: { reviewId: string }, context: Context) => {

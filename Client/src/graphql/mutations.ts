@@ -21,3 +21,13 @@ mutation addUser($username: String!, $password: String!){
     }
   }
 `;
+export const ADD_REVIEW = gql`
+mutation addReview($input: ReviewInput!){
+    addReview(input: $input) {
+    _id
+    note
+    user
+    date
+    }
+}
+`

@@ -1,15 +1,16 @@
-import type { Request} from 'express';
+//import type { Request} from 'express';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/index.js';
 import { GraphQLError } from 'graphql';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
-export const authenticateToken = async ({ req }: {req: Request}) => {
+// Verify the token
+export const authenticateToken = async ({ req }: any) => {
+ // console.log("req:", req);
   // Get the token from the request
   //const token = req.headers.authorization?.split(' ')[1] || '';
-  let token = req.body?.token || req.query.token || req.headers.authorization
+  let token = req.body.token || req.query.token || req.headers.authorization
   console.log(token);
   if( req.headers.authorization){
     token = token.split(' ').pop().trim();
@@ -18,11 +19,11 @@ export const authenticateToken = async ({ req }: {req: Request}) => {
   // If no token is provided, return an object with null user
   if (!token) {
     console.log('No token provided');
-    return { user: null };
+    return req;
   }
 
   try {
-    // Verify the token
+    
     const decoded: any = jwt.verify(token, process.env.JWT_SECRET_KEY || 'Test', { maxAge: '2h' });
     
     // Ensure decoded data exists
@@ -40,6 +41,7 @@ export const authenticateToken = async ({ req }: {req: Request}) => {
     }
 
     // Return user data
+    req.user = user;
     return req;
 
   } catch (error) {
@@ -55,6 +57,7 @@ export const authenticateToken = async ({ req }: {req: Request}) => {
     return { user: null };
   }
 };
+// Generate Token
 export const signToken = (username: string, _id: unknown) => {
   // Create a payload with the user information
   const payload = { username, _id };
