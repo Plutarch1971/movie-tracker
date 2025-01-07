@@ -11,15 +11,15 @@ export default defineConfig({
     setupFiles: './src/_tests_/setup.ts'
   },
   server: {
-    port: 3001,
+    port: 5173,
     open: true,
     proxy: {
-      '/api': {
+      '/graphql': {
         target: 'http://localhost:3001',
         secure: false,
         changeOrigin: true
       },
-      '/our-api': {
+      '/api': {
         target: 'http://localhost:3001',
         secure: false,
         changeOrigin: true

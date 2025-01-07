@@ -25,14 +25,26 @@ export const GET_ME = gql`
   }
 `;
 export const QUERY_REVIEWS = gql`
-    query getReviews {
-    reviews {
-    _id
+  query getMovieReviews($movieId: String!) {
+    getMovieReviews(movieId: $movieId) {
+      _id
       movie_id
       date
       note
       rating
+      user {
+        _id
+        username
+      }
     }
-
+  }
+`;
+export const GET_MOVIE_RATING = gql`
+  query getMovieRating($movieId: String!) {
+    getMovieRating(movieId: $movieId) {
+      averageRating
+      numberOfReviews
     }
+  }
+    
 `;
