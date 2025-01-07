@@ -2,47 +2,73 @@ import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 
 import { LOGIN_USER } from '../../graphql/mutations';
 import AuthService from '../../utils/auth';
+import { User } from '../../models/User';
 import '/src/assets/styles/loginForm.css';
 
-// Define a specific type for the form data
-interface LoginFormData {
-    username: string;
-    password: string;
-}
 
 function LoginForm () : JSX.Element {
+    const navigate = useNavigate();
     const [ userFormData , setUserFormData ] = useState<User>({
         username: '',
-        password: ''
+        password: '',
+        watchlist: [],
+        reviews: [],
     });
-
+    // set state for form validation
+    // const [validated] = useState(false);
+    //set state for alert
     const [showAlert, setShowAlert] = useState(false);
 
     const [ login, { error } ] = useMutation(LOGIN_USER);
     console.log("Error:", error);
 
+    // Check if user is already logged In
+    // useEffect(() => {
+    //     if (AuthService.loggedIn()) {
+    //         navigate('/profile');
+    //     }
+    // }, [navigate]);
+
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setUserFormData({ ...userFormData, [name]: value });
-        if (showAlert) setShowAlert(false);
+        setUserFormData({ ...userFormData, [name]: value});
     };
 
+    //handle form submission
     const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+       
         try {
             const { data } = await login ({
-                variables: { username: userFormData.username, password:userFormData.password},
+                variables: { 
+                    username: userFormData.username, 
+                    password:userFormData.password
+                },
             });
-            AuthService.login(data.login.token);
+            if (data.login.token) {
+                AuthService.login(data.login.token);
+                // Clear form data
+                setUserFormData({
+                    username: '',
+                    password: '',
+                    watchlist: [],
+                    reviews: [],
+                });
+            }
+           
+            // Navigate to home page
+            navigate('/home', { replace: true});
+        
         } catch (err) {
             console.error('Problem logging User', err);
             setShowAlert(true);
         }
+       
     };
-
     return (
         <>
         <form noValidate onSubmit={handleFormSubmit}>
@@ -64,7 +90,7 @@ function LoginForm () : JSX.Element {
             />
             <label htmlFor="password">Password:</label>
             <input 
-            type="text" 
+            type="password" 
             id="password"
             name="password"
             onChange={handleInputChange}
@@ -81,7 +107,6 @@ function LoginForm () : JSX.Element {
         </div>
         </form>
         </>
-    );
+    )
 }
-
 export default LoginForm;

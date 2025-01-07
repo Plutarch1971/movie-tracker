@@ -48,3 +48,39 @@ export const GET_MOVIE_RATING = gql`
   }
     
 `;
+
+export const GET_TOP_RATED_MOVIES = gql`
+  query GetTopRatedMovies($limit: Int) {
+    getTopRatedMovies(limit: $limit) {
+      movie_id
+      averageRating
+      numberOfReviews
+    }
+  }
+`;
+
+export const GET_RECENT_REVIEWS = gql`
+  query GetRecentReviews($limit: Int) {
+    getRecentReviews(limit: $limit) {
+      _id
+      movie_id
+      date
+      note
+      rating
+      user {
+        _id
+        username
+      }
+    }
+  }
+`;
+
+export const GET_MOST_REVIEWED_MOVIES = gql`
+  query GetMostReviewedMovies($limit: Int) {
+    getMostReviewedMovies(limit: $limit) {
+      movie_id
+      averageRating
+      numberOfReviews
+    }
+  }
+`;

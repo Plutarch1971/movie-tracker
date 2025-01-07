@@ -75,6 +75,7 @@ ReviewSchema.statics.getMovieAverageRating = async function(movieId: string): Pr
   return result[0]?.averageRating || 0;
 };
 
+
 ReviewSchema.index({ user_id: 1, movie_id: 1 }, { unique: true });
 
 export default mongoose.model<IReview, IReviewModel>('Review', ReviewSchema);

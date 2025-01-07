@@ -8,14 +8,14 @@ export const typeDefs = gql`
     reviews: [Review!]!
   }
 
-  type Review {
+ type Review {
     _id: ID!
     user_id: ID!
     movie_id: String!
     date: String!
     note: String!
-    rating: Int!
-    user: User!
+    rating: Float  # Changed from Int! to Float since it's optional in the schema
+    user: User
   }
 
   type Watchlist {
@@ -37,10 +37,10 @@ export const typeDefs = gql`
     numberOfReviews: Int!
   }
 
-  input ReviewInput {
+    input ReviewInput {
     movie_id: String!
     note: String!
-    rating: Int!
+    rating: Float!  # Changed from Int to Float to match the schema
   }
 
   input WatchlistInput {
@@ -56,19 +56,30 @@ export const typeDefs = gql`
    user: User!
    }
 
+    type TopRatedMovie {
+    movie_id: String!
+    averageRating: Float!
+    numberOfReviews: Int!
+  }
+
+
+
   type Query {
     me: User
     getUserReviews(userId: ID!): [Review!]!
     getUserWatchlists(userId: ID!): [Watchlist!]!
     getMovieReviews(movieId: String!): [Review!]!
     getMovieRating(movieId: String!): MovieRating!
+    getTopRatedMovies(limit: Int): [TopRatedMovie]
+    getRecentReviews(limit: Int): [Review]
+    getMostReviewedMovies(limit: Int): [TopRatedMovie]
   }
 
   type Mutation {
     login(username:String!, password: String!): Auth!
     addReview(reviewData: ReviewInput!): Review!
     removeReview(reviewId: ID!): Boolean!
-    updateReviewRating(reviewId: ID!, rating: Int!): Review!
+    updateReviewRating(reviewId: ID!, rating: Float!): Review!
     addUser(username: String!, password: String!): Auth!
     createWatchlist(watchlistData: WatchlistInput!): Watchlist!
     deleteWatchlist(watchlistId: ID!): Boolean!

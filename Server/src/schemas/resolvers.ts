@@ -72,7 +72,110 @@ export const resolvers = {
         numberOfReviews: reviews.length
       };
     },
+
+      
+      getTopRatedMovies: async (_: unknown, { limit = 10 }: { limit?: number }) => {
+        try {
+          const reviews = await Review.aggregate([
+            {
+              $match: {
+                rating: { $exists: true, $ne: null }  // Only include reviews with ratings
+              }
+            },
+            {
+              $group: {
+                _id: '$movie_id',
+                averageRating: { $avg: '$rating' },
+                numberOfReviews: { $sum: 1 }
+              }
+            },
+            {
+              $match: {
+                numberOfReviews: { $gte: 3 }
+              }
+            },
+            {
+              $sort: { averageRating: -1 }
+            },
+            {
+              $limit: limit
+            }
+          ]);
+  
+          return reviews.map(review => ({
+            movie_id: review._id,
+            averageRating: parseFloat(review.averageRating.toFixed(1)),
+            numberOfReviews: review.numberOfReviews
+          }));
+        } catch (error) {
+          console.error('Error in getTopRatedMovies:', error);
+          throw new Error('Failed to fetch top rated movies');
+        }
+      },
+  
+      getRecentReviews: async (_: unknown, { limit = 10 }: { limit?: number }) => {
+        try {
+          const reviews = await Review.find()
+            .sort({ date: -1 })
+            .limit(limit)
+            .populate({
+              path: 'user_id',
+              model: 'User',
+              select: '_id username'
+            });
+  
+          // Transform the reviews to match the expected format
+          return reviews.map(review => ({
+            _id: review._id,
+            user_id: review.user_id._id,
+            movie_id: review.movie_id,
+            date: review.date.toISOString(),
+            note: review.note,
+            rating: review.rating || 0,
+            user: review.user_id // This will be the populated user data
+          }));
+        } catch (error) {
+          console.error('Error in getRecentReviews:', error);
+          throw new Error('Failed to fetch recent reviews');
+        }
+      },
+  
+      getMostReviewedMovies: async (_: unknown, { limit = 10 }: { limit?: number }) => {
+        try {
+          const reviews = await Review.aggregate([
+            {
+              $match: {
+                rating: { $exists: true, $ne: null }
+              }
+            },
+            {
+              $group: {
+                _id: '$movie_id',
+                averageRating: { $avg: '$rating' },
+                numberOfReviews: { $sum: 1 }
+              }
+            },
+            {
+              $sort: { numberOfReviews: -1 }
+            },
+            {
+              $limit: limit
+            }
+          ]);
+  
+          return reviews.map(review => ({
+            movie_id: review._id,
+            averageRating: parseFloat(review.averageRating.toFixed(1)),
+            numberOfReviews: review.numberOfReviews
+          }));
+        } catch (error) {
+          console.error('Error in getMostReviewedMovies:', error);
+          throw new Error('Failed to fetch most reviewed movies');
+        }
+      },
   },
+    
+
 
   Mutation: {
 
@@ -92,6 +195,7 @@ export const resolvers = {
       const token = signToken(user.username, user._id);
       return { token, user };
     },
+
     login: async (_parent: any, { username, password }: LoginArgs) => {
       const user = await User.findOne({ username });
 
@@ -214,5 +318,5 @@ export const resolvers = {
     user: async (parent: IWatchlist) => {
       return User.findById(parent.user_id);
     }
-  },
-};
+  }
+}
