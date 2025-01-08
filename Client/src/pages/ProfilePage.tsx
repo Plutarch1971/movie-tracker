@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_ME } from '../graphql/queries';
 import { REMOVE_REVIEW, UPDATE_MOVIE_WATCHED_STATUS } from '../graphql/mutations';
 import { StarIcon } from "lucide-react";
+import '../assets/styles/profilepage.css';
 
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState<'watchlist' | 'reviews'>('watchlist');
@@ -78,16 +79,16 @@ const ProfilePage = () => {
   if (!data?.me) return <div className="text-center p-4">Please log in to view your profile.</div>;
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h1 className="text-3xl font-bold mb-2">Welcome, {data.me.username}!</h1>
+    <div className="profile-container">
+      <div className="profile-header">
+        <h1>Welcome, {data.me.username}!</h1>
       </div>
 
-      <div className="mb-6">
+      <div className="profile-items">
         <div className="border-b border-gray-200">
           <nav className="-mb-px flex space-x-8">
             <button
-              className={`${
+              className={`watch-review-box ${
                 activeTab === 'watchlist'
                   ? 'border-indigo-500 text-indigo-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -97,7 +98,7 @@ const ProfilePage = () => {
               Watchlist
             </button>
             <button
-              className={`${
+              className={`watch-review-box ${
                 activeTab === 'reviews'
                   ? 'border-indigo-500 text-indigo-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -108,90 +109,96 @@ const ProfilePage = () => {
             </button>
           </nav>
         </div>
-      </div>
 
-      {activeTab === 'watchlist' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data.me.watchlists.map((watchlist: any) => (
-            <div key={watchlist._id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="p-4">
-                <h3 className="text-xl font-semibold mb-4">{watchlist.title}</h3>
-                <div className="space-y-4">
-                  {watchlist.movies.map((movie: any) => {
-                    const movieDetail = movieDetails[movie.movie_id];
-                    return (
-                      <div key={movie.movie_id} className="flex items-center space-x-4">
-                        {movieDetail && (
-                          <img
-                            src={`https://image.tmdb.org/t/p/w200${movieDetail.poster_path}`}
-                            alt={movieDetail.title}
-                            className="w-16 h-24 object-cover rounded"
-                          />
-                        )}
-                        <div className="flex-1">
-                          <p className="font-medium">{movieDetail?.title}</p>
-                          <div className="flex items-center mt-2">
-                            <input
-                              type="checkbox"
-                              checked={movie.watched}
-                              onChange={(e) => handleUpdateWatchStatus(watchlist._id, movie.movie_id, e.target.checked)}
-                              className="form-checkbox h-4 w-4 text-indigo-600"
-                            />
-                            <span className="ml-2 text-sm text-gray-600">Watched</span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {activeTab === 'reviews' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data.me.reviews.map((review: any) => {
-            const movieDetail = movieDetails[review.movie_id];
-            return (
-              <div key={review._id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-                {movieDetail && (
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`}
-                    alt={movieDetail.title}
-                    className="w-full h-48 object-cover"
-                  />
-                )}
-                <div className="p-4">
-                  <h3 className="font-semibold text-lg mb-2">{movieDetail?.title}</h3>
-                  <div className="flex items-center mb-2">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <StarIcon
-                        key={star}
-                        className={`w-5 h-5 ${
-                          star <= review.rating
-                            ? 'text-yellow-400 fill-yellow-400'
-                            : 'text-gray-300'
-                        }`}
+        {activeTab === 'watchlist' && (
+  <div className="movie-grid">
+    {data.me.watchlists.map((watchlist: any) => (
+      <div key={watchlist._id} className="movie-card">
+        <div className="movie-content">
+          <h3 className="text-xl font-semibold mb-4 text-gray-800">{watchlist.title}</h3>
+          <div className="space-y-2">
+            {watchlist.movies.map((movie: any) => {
+              const movieDetail = movieDetails[movie.movie_id];
+              return (
+                <div key={movie.movie_id} className="watchlist-item">
+                  {movieDetail && (
+                    <div className="watchlist-image">
+                      <img
+                        src={`https://image.tmdb.org/t/p/w200${movieDetail.poster_path}`}
+                        alt={movieDetail.title}
                       />
-                    ))}
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <p className="font-medium text-gray-800 truncate">{movieDetail?.title}</p>
+                    <div className="flex items-center mt-2">
+                      <input
+                        type="checkbox"
+                        checked={movie.watched}
+                        onChange={(e) => handleUpdateWatchStatus(watchlist._id, movie.movie_id, e.target.checked)}
+                        className="form-checkbox h-4 w-4 text-indigo-600"
+                      />
+                      <span className="ml-2 text-sm text-gray-600">Watched</span>
+                    </div>
                   </div>
-                  <p className="text-gray-600 mb-4">{review.note}</p>
-                  <button
-                    onClick={() => handleRemoveReview(review._id)}
-                    className="text-red-600 hover:text-red-800 text-sm"
-                  >
-                    Remove Review
-                  </button>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      )}
+      </div>
+    ))}
+  </div>
+)}
+
+{activeTab === 'reviews' && (
+  <div className="movie-grid">
+    {data.me.reviews.map((review: any) => {
+      const movieDetail = movieDetails[review.movie_id];
+      return (
+        <div key={review._id} className="profile-item">
+          {movieDetail && (
+            <div className="profile-image">
+              <img
+                src={`https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`}
+                alt={movieDetail.title}
+              />
+            </div>
+          )}
+          <div className="movie-content">
+            <h3 className="font-semibold text-lg mb-2 text-gray-800 truncate">
+              {movieDetail?.title}
+            </h3>
+            <div className="flex items-center mb-2">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <StarIcon
+                  key={star}
+                  className={`w-5 h-5 ${
+                    star <= review.rating
+                      ? 'text-yellow-400 fill-yellow-400'
+                      : 'text-gray-300'
+                  }`}
+                />
+              ))}
+            </div>
+            <p className="text-gray-600 mb-4 line-clamp-3">{review.note}</p>
+            <div className="mt-auto">
+              <button
+                onClick={() => handleRemoveReview(review._id)}
+                className="text-red-600 hover:text-red-800 text-sm"
+              >
+                Remove Review
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+)}
+      </div>
     </div>
   );
-};
+}
 
 export default ProfilePage;

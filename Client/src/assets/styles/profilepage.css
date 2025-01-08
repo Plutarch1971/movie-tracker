@@ -1,33 +1,116 @@
 .profile-container {
-    width: 100%;
-    height: 100vh;
-    display:flex;
-    flex-direction: column;
-    background-color: #89A9B4;
-    color: white;
-    text-align:left;
-    padding: 30px;
-  }
-  .watch-review-box{
-    width: 200px;
-    height: 150px;
-    /* background-color: blue; */
-    margin:10px;
-    margin-left: 10px;
-  }
-  .profile-header{
-    width: 100%;
-    font-size: 1.5 rem;
-    text-align: left;
-    /*margin-bottom: 10px;*/
-    font-size: 1.5rem; /* Adjust the font size as needed */
-    font-weight: bold;
-    background-color: #89A9B4;
-    color: white;
-    padding-left: 30px;
-  }
-  .profile-items{
-    background-color: white;
-    width: 100%;
-    flex: 2;
-  }
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #89A9B4;
+  color: white;
+  text-align: left;
+  padding: 30px;
+}
+
+.profile-header {
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: #89A9B4;
+  color: white;
+  padding-left: 30px;
+  margin-bottom: 20px;
+}
+
+.profile-items {
+  background-color: white;
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+}
+.profile-image {
+  width: 60px;
+  height: 90px;
+  flex-shrink: 0;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.profile-item{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabs-container {
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  overflow-y: auto;
+  height: calc(100vh - 250px);
+}
+
+.movie-card {
+  width: 100%;
+  height: 400px; /* Fixed height for consistency */
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+.movie-image-container {
+  width: 100%;
+  height: 200px; /* Fixed height for images */
+  overflow: hidden;
+}
+
+.movie-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-content {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.watchlist-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.watchlist-image {
+  width: 60px;
+  height: 90px;
+  flex-shrink: 0;
+}
+
+.watchlist-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}

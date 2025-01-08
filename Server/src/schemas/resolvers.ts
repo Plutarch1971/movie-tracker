@@ -315,6 +315,7 @@ export const resolvers = {
 
       return await watchlist.save();
     },
+    
     deleteWatchlist: async (_: unknown, { watchlistId }: { watchlistId: string }, context: Context) => {
       if (!context.user) throw new AuthenticationError('Not authenticated');
     
