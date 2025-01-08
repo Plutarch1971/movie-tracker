@@ -1,4 +1,4 @@
-# 🎬 MovieMinder
+# 🎬 Movie-Tracker
 
 MovieMinder is a modern web application that helps users track their favorite movies, create watchlists, and discover new films. Built with a robust stack of contemporary technologies, it offers a seamless and interactive experience for movie enthusiasts.
 
