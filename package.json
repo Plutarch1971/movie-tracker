@@ -13,6 +13,9 @@
         "test-component": "npx cypress run --component",
         "test-gui": "npx cypress open"
     },
+    "engines": {
+        "node": "18.x"
+    },
     "keywords": [],
     "author": "",
     "license": "ISC",
