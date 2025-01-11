@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
       GET_TOP_RATED_MOVIES,
       { 
         ...queryOptions,
-        variables: { limit: 14 }
+        variables: { limit: 12 }
       }
     );
 
@@ -64,7 +64,7 @@ const HomePage: React.FC = () => {
       GET_RECENT_REVIEWS,
       { 
         ...queryOptions,
-        variables: { limit: 14 }
+        variables: { limit: 12 }
       }
     );
 
@@ -73,7 +73,7 @@ const HomePage: React.FC = () => {
       GET_MOST_REVIEWED_MOVIES,
       { 
         ...queryOptions,
-        variables: { limit: 14 }
+        variables: { limit: 12 }
       }
     );
 
