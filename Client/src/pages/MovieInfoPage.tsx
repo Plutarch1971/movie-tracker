@@ -101,22 +101,7 @@ const MovieInfoPage: React.FC = () => {
     }
   }, [id]);
 
-  const handleRatingSubmit = async () => {
-    if (!isLoggedIn) {
-      setError('Please log in to rate movies');
-      return;
-    }
 
-    try {
-      await axios.post(`/api/movies/${id}/ratings`, {
-        rating: userRating
-      });
-      // Refresh movie data to update ratings
-      window.location.reload();
-    } catch (err) {
-      setError('Failed to submit rating');
-    }
-  };
 
   const handleReviewSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

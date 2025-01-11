@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '/src/assets/styles/searchResults.css';
 import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Movie {
   id: number;
@@ -21,12 +22,14 @@ const SearchResultsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [totalResults, setTotalResults] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   const API_URL = import.meta.env.VITE_API_URL;
   const API_Token = import.meta.env.VITE_API_TOKEN_SECRET;
-  const MAX_RESULTS = 30;
+  const RESULTS_PER_PAGE = 20; // TMDB API returns 20 results per page
 
-  const searchMovies = async (query: string) => {
+  const searchMovies = async (query: string, page: number = 1) => {
     if (!query.trim()) {
       setMovies([]);
       return;
@@ -41,7 +44,7 @@ const SearchResultsPage: React.FC = () => {
       }
      
       const response = await fetch(
-        `${API_URL}/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=1&include_adult=false`,
+        `${API_URL}/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${page}&include_adult=false`,
         {
           headers: {
             'Authorization': `Bearer ${API_Token}`,
@@ -59,8 +62,9 @@ const SearchResultsPage: React.FC = () => {
 
       const data: SearchResponse = await response.json();
       setTotalResults(data.total_results);
-      // Limit the results to MAX_RESULTS
-      setMovies(data.results.slice(0, MAX_RESULTS) || []);
+      setTotalPages(data.total_pages);
+      setMovies(data.results || []);
+      setCurrentPage(page);
 
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Error searching movies';
@@ -78,7 +82,14 @@ const SearchResultsPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    searchMovies(searchTerm);
+    searchMovies(searchTerm, 1); // Reset to first page on new search
+  };
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      searchMovies(searchTerm, newPage);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
@@ -117,8 +128,45 @@ const SearchResultsPage: React.FC = () => {
     );
   };
 
+  const PaginationControls = () => {
+    const startResult = (currentPage - 1) * RESULTS_PER_PAGE + 1;
+    const endResult = Math.min(currentPage * RESULTS_PER_PAGE, totalResults);
+
+    return (
+      <div className="flex flex-col items-center space-y-4 mt-6 mb-8">
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1 || isLoading}
+            className="px-4 py-2 bg-gray-100 rounded-lg flex items-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-200 transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5 mr-1" />
+            Previous
+          </button>
+          
+          <span className="text-gray-600">
+            Page {currentPage} of {totalPages}
+          </span>
+          
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages || isLoading}
+            className="px-4 py-2 bg-gray-100 rounded-lg flex items-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-200 transition-colors"
+          >
+            Next
+            <ChevronRight className="w-5 h-5 ml-1" />
+          </button>
+        </div>
+        
+        <div className="text-gray-600">
+          Showing {startResult}-{endResult} of {totalResults} results
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className="min-h-screen">
+    <div className="search-results-page">
       <form onSubmit={handleSubmit} className="search-bar">
         <div className="search-container">
           <label htmlFor="search-input">
@@ -166,9 +214,7 @@ const SearchResultsPage: React.FC = () => {
         </div>
 
         {!isLoading && !error && movies.length > 0 && (
-          <div className="text-center py-4 text-gray-600">
-            Showing {movies.length} of {totalResults} results
-          </div>
+          <PaginationControls />
         )}
 
         {!isLoading && !error && movies.length === 0 && searchTerm && (

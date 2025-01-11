@@ -31,20 +31,31 @@ interface Review {
 
 const HomePage: React.FC = () => {
   const [movieDetails, setMovieDetails] = useState<Record<string, TMDBMovie>>({});
+  const [retryCount, setRetryCount] = useState(0);
+
+  // Add retry policy to queries
+  const queryOptions = {
+    notifyOnNetworkStatusChange: true,
+    errorPolicy: 'all' as const,
+    retry: 2,
+    onError: (error: any) => {
+      console.error('Query Error:', error);
+      // Implement exponential backoff
+      if (retryCount < 3) {
+        const timeout = Math.pow(2, retryCount) * 1000;
+        setTimeout(() => {
+          setRetryCount(prev => prev + 1);
+        }, timeout);
+      }
+    }
+  };
 
   const { data: topRatedData, loading: topRatedLoading, error: topRatedError } = 
     useQuery<{ getTopRatedMovies: TopRatedMovie[] }>(
       GET_TOP_RATED_MOVIES,
       { 
-        variables: { limit: 10 },
-        notifyOnNetworkStatusChange: true,
-        errorPolicy: 'all',
-        onError: (error) => {
-          console.error('Top Rated Query Error:', error);
-        },
-        onCompleted: (data) => {
-          console.log('Top Rated Query Completed:', data);
-        }
+        ...queryOptions,
+        variables: { limit: 12 }
       }
     );
 
@@ -52,9 +63,8 @@ const HomePage: React.FC = () => {
     useQuery<{ getRecentReviews: Review[] }>(
       GET_RECENT_REVIEWS,
       { 
-        variables: { limit: 10 },
-        notifyOnNetworkStatusChange: true,
-        errorPolicy: 'all'
+        ...queryOptions,
+        variables: { limit: 12 }
       }
     );
 
@@ -62,9 +72,8 @@ const HomePage: React.FC = () => {
     useQuery<{ getMostReviewedMovies: TopRatedMovie[] }>(
       GET_MOST_REVIEWED_MOVIES,
       { 
-        variables: { limit: 10 },
-        notifyOnNetworkStatusChange: true,
-        errorPolicy: 'all'
+        ...queryOptions,
+        variables: { limit: 12 }
       }
     );
 
@@ -73,27 +82,34 @@ const HomePage: React.FC = () => {
       const uniqueIds = [...new Set(movieIds)];
       const details: Record<string, TMDBMovie> = {};
 
-      await Promise.all(
-        uniqueIds.map(async (movieId) => {
-          try {
-            const response = await fetch(
-              `https://api.themoviedb.org/3/movie/${movieId}`,
-              {
-                headers: {
-                  'Authorization': `Bearer ${import.meta.env.VITE_API_TOKEN_SECRET}`,
-                  'accept': 'application/json'
+      try {
+        await Promise.all(
+          uniqueIds.map(async (movieId) => {
+            try {
+              const response = await fetch(
+                `https://api.themoviedb.org/3/movie/${movieId}`,
+                {
+                  headers: {
+                    'Authorization': `Bearer ${import.meta.env.VITE_API_TOKEN_SECRET}`,
+                    'accept': 'application/json'
+                  }
                 }
+              );
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
               }
-            );
-            const data = await response.json();
-            details[movieId] = data;
-          } catch (err) {
-            console.error(`Error fetching details for movie ${movieId}:`, err);
-          }
-        })
-      );
+              const data = await response.json();
+              details[movieId] = data;
+            } catch (err) {
+              console.error(`Error fetching details for movie ${movieId}:`, err);
+            }
+          })
+        );
 
-      setMovieDetails(details);
+        setMovieDetails(details);
+      } catch (err) {
+        console.error('Error in fetchMovieDetails:', err);
+      }
     };
 
     const allMovieIds = [
@@ -105,11 +121,7 @@ const HomePage: React.FC = () => {
     if (allMovieIds.length > 0) {
       fetchMovieDetails(allMovieIds);
     }
-
-    console.log('Top Rated Data:', topRatedData);
-    console.log('Top Rated Error:', topRatedError);
-
-  }, [topRatedData, topRatedError, recentReviewsData, mostReviewedData]);
+  }, [topRatedData, recentReviewsData, mostReviewedData]);
 
   const RatedMovieSection: React.FC<{ 
     title: string; 
@@ -212,14 +224,23 @@ const HomePage: React.FC = () => {
   );
   
   if (topRatedError || recentReviewsError || mostReviewedError) {
-    console.error('GraphQL Errors:', { topRatedError, recentReviewsError, mostReviewedError });
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-red-500">Error loading movie data. Please try again later.</p>
+      <div className="min-h-screen flex flex-col items-center justify-center p-4">
+        <p className="text-red-500 mb-4">Error loading movie data.</p>
+        {retryCount < 3 && (
+          <p className="text-gray-600">Retrying... ({retryCount + 1}/3)</p>
+        )}
+        {retryCount >= 3 && (
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Retry Loading
+          </button>
+        )}
       </div>
     );
   }
-
 
   if (topRatedLoading || recentReviewsLoading || mostReviewedLoading) {
     return (
