@@ -1,14 +1,16 @@
 {
     "name": "movie-tracker",
     "version": "1.0.0",
-    "description": "This app will be design to keep track of movies  for the users.",
+    "description": "This app will be design to keep track of movies for the users.",
     "scripts": {
         "start": "cd server && npm run start",
         "seed": "cd server && npm run seed",
         "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
         "install": "cd server && npm i && cd ../client && npm i",
-        "build": "cd server && npm run build && cd ../client && npm run build",
-        "render-build": "npm install && npm run build",
+        "build": "npm run build-server && npm run build-client",
+        "build-server": "cd server && npm run build",
+        "build-client": "cd client && npm run build",
+        "render-build": "npm install && npm run build-client",
         "test": "npx cypress run --browser electron",
         "test-component": "npx cypress run --component",
         "test-gui": "npx cypress open"
@@ -34,5 +36,8 @@
         "vite-plugin-env-compatible": "^2.0.1",
         "vitest": "^2.0.3"
     },
-    "main": "index.js"
+    "main": "index.js",
+    "engines": {
+        "node": ">=18.0.0"
+    }
 }
