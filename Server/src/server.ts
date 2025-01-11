@@ -72,12 +72,12 @@ const startServer = async () => {
 
     // Serve static files in production
     if (process.env.NODE_ENV === 'production') {
-        const buildPath = path.join(__dirname, '../client/dist');
+        const buildPath = path.join(__dirname, '/client/dist');
         app.use(express.static(buildPath));
         
         // Handle frontend routes
         app.get('*', (_req, res) => {
-            res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+            res.sendFile(path.join(__dirname, '/client/dist/index.html'));
         });
     }
 
