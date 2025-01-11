@@ -8,7 +8,7 @@
         "build": "vite build",
         "dev": "vite",
         "preview": "vite preview",
-        "render-build": "npm install && cd client && npm install && npm run build && cd ../server && npm install && npm run build",
+        "render-build": "npm install && cd Client && npm install && npm run build && cd ../Server && npm install && npm run build",
         "test": "npx cypress run --browser electron",
         "test-component": "npx cypress run --component",
         "test-gui": "npx cypress open"
