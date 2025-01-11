@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
     useQuery<{ getTopRatedMovies: TopRatedMovie[] }>(
       GET_TOP_RATED_MOVIES,
       { 
-        variables: { limit: 10 },
+        variables: { limit: 14 },
         notifyOnNetworkStatusChange: true,
         errorPolicy: 'all',
         onError: (error) => {
