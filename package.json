@@ -1,26 +1,42 @@
 {
-    "name": "movie-tracker-root",
+    "name": "movie-tracker",
     "version": "1.0.0",
-    "description": "Movie Tracker Application",
+    "description": "This app will be design to keep track of movies for the users.",
     "scripts": {
-        "start": "cd server && npm start",
-        "install-client": "cd client && npm install",
-        "install-server": "cd server && npm install",
-        "build-client": "cd client && npm run build",
-        "build-server": "cd server && npm run build",
-        "heroku-postbuild": "npm run install-client && npm run install-server && npm run build-client && npm run build-server",
-        "render-build": "npm run install-client && npm run build-client",
-        "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\""
+        "start": "node server.js",
+        "develop": "concurrently \"npm run watch\" \"npm run dev\"",
+        "build": "vite build",
+        "dev": "vite",
+        "preview": "vite preview",
+        "render-build": "npm install && npm run build",
+        "test": "npx cypress run --browser electron",
+        "test-component": "npx cypress run --component",
+        "test-gui": "npx cypress open"
     },
-    "engines": {
-        "node": ">=18.0.0"
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/cors": "^2.8.17",
+        "@types/lodash": "^4.17.13",
+        "concurrently": "^8.2.0",
+        "cypress": "^13.17.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "ts-node": "^10.9.2",
+        "vite": "^5.0.0"
     },
     "dependencies": {
-        "concurrently": "^8.2.0"
+        "@types/bcrypt": "^5.0.2",
+        "@vitejs/plugin-react": "^4.3.1",
+        "bcrypt": "^5.1.1",
+        "dotenv": "^16.4.7",
+        "graphql-tag": "^2.12.6",
+        "vite-plugin-env-compatible": "^2.0.1",
+        "vitest": "^2.0.3"
     },
-    "devDependencies": {},
-    "cacheDirectories": [
-        "client/node_modules",
-        "server/node_modules"
-    ]
+    "main": "index.js",
+    "engines": {
+        "node": ">=18.0.0"
+    }
 }
