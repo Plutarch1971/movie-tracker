@@ -4,7 +4,7 @@
     "description": "This app will be design to keep track of movies for the users.",
     "scripts": {
         "start": "cd server && npm run start",
-        "develop": "concurrently \"npm run watch\" \"npm run dev\"",
+        "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
         "build": "vite build",
         "dev": "vite",
         "preview": "vite preview",
