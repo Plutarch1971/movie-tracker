@@ -60,9 +60,10 @@
       padding: 1rem;
     }
   }.movie-info-container {
-  min-height: 100vh;
-  background-color: rgb(249, 250, 251);
-  color: black;
+    min-height: 100vh;
+    background-color: rgb(249, 250, 251);
+    color: black;
+    background-image: url('/movietracker-bg.png');
 }
 
 .movie-poster img {

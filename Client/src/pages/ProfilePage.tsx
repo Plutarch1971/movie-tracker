@@ -9,14 +9,23 @@ const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState<'watchlist' | 'reviews'>('watchlist');
   const [movieDetails, setMovieDetails] = useState<Record<string, any>>({});
 
-  const { loading, error, data } = useQuery(GET_ME);
+  const { loading, error, data, refetch } = useQuery(GET_ME);
+  
+  // Updated removeReview mutation
   const [removeReview] = useMutation(REMOVE_REVIEW, {
-    refetchQueries: [{ query: GET_ME }]
+    onCompleted: () => {
+      // Refetch the user data after successful removal
+      refetch();
+    },
+    onError: (error) => {
+      console.error('Error removing review:', error);
+    }
   });
+
   const [updateWatchedStatus] = useMutation(UPDATE_MOVIE_WATCHED_STATUS, {
     refetchQueries: [{ query: GET_ME }]
   });
-
+  
   useEffect(() => {
     const fetchMovieDetails = async () => {
       const movieIds = data?.me?.reviews?.map((r: any) => r.movie_id) || [];

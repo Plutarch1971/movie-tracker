@@ -39,9 +39,7 @@ export const ADD_REVIEW = gql`
 
 export const REMOVE_REVIEW = gql`
   mutation removeReview($reviewId: ID!) {
-    removeReview(reviewId: $reviewId) {
-      _id
-    }
+    removeReview(reviewId: $reviewId) 
   }
 `;
 
