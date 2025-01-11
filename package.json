@@ -7,7 +7,7 @@
         "develop": "concurrently \"cd Server && npm run watch\" \"cd Client && npm run dev\"",
         "dev": "vite",
         "preview": "vite preview",
-        "render-build": "npm install && cd Client && npm install && npm run build && cd ../Server && npm install && npm run build && cd ../",
+        "render-build": "npm install && cd Client && npm install && npm run build && cd ../Server && npm install && npm run build",
         "test": "npx cypress run --browser electron",
         "test-component": "npx cypress run --component",
         "test-gui": "npx cypress open"
