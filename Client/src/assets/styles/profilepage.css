@@ -7,8 +7,11 @@
   color: white;
   text-align: left;
   padding: 30px;
-}
 
+}
+.profilepage-bg {
+ background-image: url('../assests/styles/movietracker-bg.png')
+}
 .profile-header {
   width: 100%;
   font-size: 1.5rem;

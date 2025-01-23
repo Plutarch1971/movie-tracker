@@ -5,17 +5,16 @@
     "scripts": {
         "start": "cd server && npm run start",
         "seed": "cd server && npm run seed",
-        "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
+        "develop": "concurrently \"cd server && npm run watch\" \"wait-on tcp:3001 && cd client && npm run dev\"",
         "install": "cd server && npm i && cd ../client && npm i",
         "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
         "render-build": "vite build",
         "test": "npx cypress run --browser electron",
         "test-component": "npx cypress run --component",
         "test-gui": "npx cypress open"
-    
     },
     "engines": {
-    "node": "18.x"
+        "node": "18.x"
     },
     "keywords": [],
     "author": "",
@@ -27,7 +26,8 @@
         "cypress": "^13.17.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "ts-node": "^10.9.2"
+        "ts-node": "^10.9.2",
+        "wait-on": "^8.0.2"
     },
     "dependencies": {
         "@types/bcrypt": "^5.0.2",
@@ -35,9 +35,9 @@
         "bcrypt": "^5.1.1",
         "dotenv": "^16.4.7",
         "graphql-tag": "^2.12.6",
+        "vite": "^4.3.1",
         "vite-plugin-env-compatible": "^2.0.1",
-        "vitest": "^2.0.3",
-        "vite": "^4.3.1"
+        "vitest": "^2.0.3"
     },
     "main": "index.js"
 }

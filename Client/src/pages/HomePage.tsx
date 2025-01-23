@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { StarIcon } from "lucide-react";
 import { GET_TOP_RATED_MOVIES, GET_RECENT_REVIEWS, GET_MOST_REVIEWED_MOVIES } from '../graphql/queries';
 import '../assets/styles/homepage.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface TMDBMovie {
   id: number;
@@ -234,7 +235,7 @@ const HomePage: React.FC = () => {
     <div className="bg-gray-900 text-white py-16">
       <div className="container mx-auto px-4">
         <h1 className="homepage-header mb-4">Movie Tracker</h1>
-        <p className="text-xl mb-8">
+        <p className="fs-1 mb-8 fancy-font">
           Join our community of movie enthusiasts to discover, review, and track your favorite films
         </p>
       </div>

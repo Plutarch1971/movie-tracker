@@ -4,7 +4,19 @@ import envCompatible from 'vite-plugin-env-compatible';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), envCompatible()],
+   plugins: [react(), envCompatible()],
+   build: {
+    rollupOptions:{
+      output: {
+        manualChunks:{
+          'react-vendor': ['react', 'react-dom'],
+          'apollo-client': ['@apollo/client'],
+          //Add other large dependencies here
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000, //Adjust the chunk size warning limit if needed
+   },
   test: {
     globals: true,
     environment: 'jsdom',
@@ -19,7 +31,7 @@ export default defineConfig({
         secure: false,
         changeOrigin: true
       },
-      '/api': {
+      '/our-api': {
         target: 'http://localhost:3001',
         secure: false,
         changeOrigin: true

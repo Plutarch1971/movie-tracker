@@ -70,7 +70,7 @@ function SignupForm (): JSX.Element {
                 />
                 <label htmlFor="password">Create password:</label>
                 <input 
-                    type="text" 
+                    type="password" 
                     id="password"
                     name="password"
                     value={signupFormData.password || ''}

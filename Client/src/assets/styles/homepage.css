@@ -1,3 +1,9 @@
+/* filepath: /Users/matthewmendez/bootcamp/Projects/movie-tracker/Client/src/assets/styles/homepage.css */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+.fancy-font {
+  font-family: 'Lobster', cursive;
+}
 .MovieCard {
   width: 230px;  /* Increased from 100px */
   height: auto;  /* Changed from fixed height */
@@ -18,7 +24,10 @@
   min-height: 400px;  /* Changed from fixed height */
   display: flex;
   flex-direction: column;  /* Changed to column */
-  background: beige;
+  /* background: beige; */
+  background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
+  linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%),
+  linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%);
   padding: 20px;
   margin: 0;
   gap: 15px;
