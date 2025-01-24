@@ -235,7 +235,7 @@ const HomePage: React.FC = () => {
     <div className="bg-gray-900 text-white py-16">
       <div className="container mx-auto px-4">
         <h1 className="homepage-header mb-4">Movie Tracker</h1>
-        <p className="fs-1 mb-8 fancy-font">
+        <p className="fs-2 mb-8 py-5 fancy-font">
           Join our community of movie enthusiasts to discover, review, and track your favorite films
         </p>
       </div>
