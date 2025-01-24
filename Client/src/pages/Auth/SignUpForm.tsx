@@ -6,6 +6,7 @@ import { ADD_USER } from '../../graphql/mutations';
 import AuthService from '../../utils/auth';
 import type { User } from '../../models/User';
 import '/src/assets/styles/signupForm.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function SignupForm (): JSX.Element {
     const [ signupFormData, setSignupFormData ] = useState<User>({
@@ -46,7 +47,7 @@ function SignupForm (): JSX.Element {
     };
     return (
         <>
-        <div className="signup-parent">
+        <div className="signup-parent custom-padding-top">
             <div>
             <img src="/harry-potter.png"></img>
             </div>
@@ -73,7 +74,12 @@ function SignupForm (): JSX.Element {
                     onChange={handleInputChange}
                     required
                     />
-                <button type="submit" className="center-button-text">Submit</button>
+                <button 
+                onClick={() => window.location.href = '/home'}
+                type="submit" 
+                className="center-button-text"
+                >Submit</button>
+                
                 <div>
                     <h4>Already signed up...?</h4>
                     <button 

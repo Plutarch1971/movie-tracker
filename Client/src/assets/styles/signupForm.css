@@ -70,3 +70,6 @@
   .form-control{
     height: 200px;
   }
+  .custom-padding-top {
+    padding-top: 70px; /* Adjust the value as needed */
+  }
