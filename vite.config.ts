@@ -4,17 +4,20 @@ import envCompatible from 'vite-plugin-env-compatible'
 import path from 'path'
 
 export default defineConfig({
-  plugins: [react(), envCompatible()],
-  root: './client/src', // Add this to specify source directory
-  build: {
-    outDir: path.resolve(dirname, 'dist'), // Specify build output directory
-    emptyOutDir: true,
-    rollupOptions: {
-      input: {
-        main: path.resolve(dirname, 'client/src/index.html') // Specify entry point
-      }
-    }
-  },
+
+   plugins: [react(), envCompatible()],
+   build: {
+    rollupOptions:{
+      output: {
+        manualChunks:{
+          'react-vendor': ['react', 'react-dom'],
+          'apollo-client': ['@apollo/client'],
+          //Add other large dependencies here
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000, //Adjust the chunk size warning limit if needed
+   },
   test: {
     globals: true,
     environment: 'jsdom',
@@ -29,8 +32,9 @@ export default defineConfig({
         secure: false,
         changeOrigin: true
       },
-      '/api': {
-        target: 'http://localhost:3001/',
+
+      '/our-api': {
+        target: 'http://localhost:3001',
         secure: false,
         changeOrigin: true
       }

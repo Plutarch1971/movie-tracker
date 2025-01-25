@@ -6,6 +6,7 @@ import { ADD_USER } from '../../graphql/mutations';
 import AuthService from '../../utils/auth';
 import type { User } from '../../models/User';
 import '/src/assets/styles/signupForm.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function SignupForm (): JSX.Element {
     const [ signupFormData, setSignupFormData ] = useState<User>({
@@ -46,21 +47,16 @@ function SignupForm (): JSX.Element {
     };
     return (
         <>
-        <div className="signup-parent">
+        <div className="signup-parent custom-padding-top">
             <div>
             <img src="/harry-potter.png"></img>
             </div>
-         
-               
-                {/* {showAlert && (
-                    <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
-                        Invalid input. Please check your username and password.
-                    </Alert>
-                )} */}
+                 
               <Form className="signup-child" noValidate validated={validated} onSubmit={handleFormSubmit}>
               <div><h1>Sign Up</h1></div>
                 <label htmlFor="username">Create username:</label>
                 <input 
+                    className="form-control"
                     type="text" 
                     id="username"
                     name="username"
@@ -70,17 +66,24 @@ function SignupForm (): JSX.Element {
                 />
                 <label htmlFor="password">Create password:</label>
                 <input 
-                    type="text" 
+                    className="form-control"
+                    type="password" 
                     id="password"
                     name="password"
                     value={signupFormData.password || ''}
                     onChange={handleInputChange}
                     required
                     />
-                <button type="submit">Submit</button>
-                <div className="redirection-login">
-                    <h2>Already signed up...?</h2>
-                    <button
+                <button 
+                onClick={() => window.location.href = '/home'}
+                type="submit" 
+                className="center-button-text"
+                >Submit</button>
+                
+                <div>
+                    <h4>Already signed up...?</h4>
+                    <button 
+                    className="center-button-text"
                     onClick={() => window.location.href = '/login'}
                     >Login here
                     </button>

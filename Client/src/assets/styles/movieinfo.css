@@ -6,7 +6,9 @@
     background-color: rgb(249, 250, 251);
     color: black;
   }
-  
+  .movie-info-container-bg {
+    background-image: url('./movietracker-bg.png');
+  } 
   .movie-poster img {
     width: 100%;
     height: auto;
