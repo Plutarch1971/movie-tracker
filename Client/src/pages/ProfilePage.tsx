@@ -89,7 +89,7 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-container">
-      <div className="profile-header">
+      <div className="profile-header mt-4">
         <h1>Welcome, {data.me.username}!</h1>
       </div>
 
@@ -120,7 +120,7 @@ const ProfilePage = () => {
         </div>
 
         {activeTab === 'watchlist' && (
-  <div className="movie-grid">
+  <div className="movie-grid profilepage-bg">
     {data.me.watchlists.map((watchlist: any) => (
       <div key={watchlist._id} className="movie-card">
         <div className="movie-content">
