@@ -106,11 +106,10 @@ npm start
 
 ## 📱 Screenshots
 
-![Dashboard View](/screenshots/dashboard.png)
-*Main dashboard showing movie collections*
+![image](https://github.com/user-attachments/assets/ce5de583-712d-4199-8f6a-4ea1340f5f25)
+![image](https://github.com/user-attachments/assets/f299115c-b4d2-45a6-be63-a90436f3c9c5)
+![image](https://github.com/user-attachments/assets/7cafa197-facd-43e4-8044-03b11182d416)
 
-![Movie Details](/screenshots/movie-details.png)
-*Detailed view of a movie with ratings and reviews*
 
 ## 🔐 Security Features
 
