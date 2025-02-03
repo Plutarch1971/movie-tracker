@@ -81,7 +81,9 @@ function SignupForm (): JSX.Element {
                 >Submit</button>
                 
                 <div>
+                    <div className="pt-4 pb-3">
                     <h4>Already signed up...?</h4>
+                    </div>
                     <button 
                     className="center-button-text"
                     onClick={() => window.location.href = '/login'}
